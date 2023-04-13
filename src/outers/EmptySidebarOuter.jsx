@@ -1,6 +1,5 @@
 import { Grid } from "@mui/material"
 import { Outlet } from "react-router-dom"
-import { isMobile } from "react-device-detect"
 
 import Sidebar from '../Sidebar'
 
