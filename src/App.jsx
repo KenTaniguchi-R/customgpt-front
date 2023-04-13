@@ -72,7 +72,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "",
       element: <NavOuter />,
       errorElement: <ErrorPage />,
       children: [
@@ -153,7 +153,7 @@ function App() {
         },
       ]
     },
-  ]);
+  ], { basename: "/customgpt-front" }); //TODO: change to /customgpt-front when deploying
 
   return (
     <RouterProvider router={router} />
