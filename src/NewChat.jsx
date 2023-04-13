@@ -28,7 +28,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 
-const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
+import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 const CREATE_CHAT_URL = `${BASE_API_ENDPOINT}api/chat/create_chat/`
 
 

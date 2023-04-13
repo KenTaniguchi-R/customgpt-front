@@ -23,7 +23,7 @@ import { useRefDetailState } from '../customHooks/useRefDetailState';
 import { Card } from '@mui/material';
 import { CardContent } from '@mui/material';
 
-const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
+import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 
 
 const ClientAnalyzeQuestion = () => {

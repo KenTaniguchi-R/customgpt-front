@@ -1,6 +1,3 @@
-import Button from '@mui/material/Button';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from "react-router-dom";
 
 import List from '@mui/material/List';
@@ -9,12 +6,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ChatIcon from '@mui/icons-material/Chat';
-import Drawer from '@mui/material/Drawer';
 
 import { useChatInfoState } from './customHooks/useChatInfoState';
 import { useRoomsState } from './customHooks/useRoomsState';
-
-const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
 
 const Sidebar = ({has_chat_info=false, has_rooms=false, handleRoom=null}) => {
 

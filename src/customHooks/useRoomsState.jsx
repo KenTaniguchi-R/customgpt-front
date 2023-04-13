@@ -1,6 +1,6 @@
 import { useCustomState } from './useCustomState';
 
-const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
+import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 
 export const useRoomsState = ({source_id}) =>{
   const [rooms, setRooms] = useCustomState({

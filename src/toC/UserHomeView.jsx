@@ -12,12 +12,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 
+import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useChatsState } from '../customHooks/useChatsState';
 import axios from 'axios';
-
-const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
 
 const UserHomeView = () => {
 

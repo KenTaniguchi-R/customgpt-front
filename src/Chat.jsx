@@ -17,9 +17,10 @@ import axios from 'axios'
 import Sidebar from './Sidebar'
 import { OpenLink } from './components/OpenLink';
 import { useChatInfoState } from './customHooks/useChatInfoState';
+import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 
 
-const GET_ROOM_MESSAGES_URL = 'http://127.0.0.1:8000/api/chat/get_messages/';
+const GET_ROOM_MESSAGES_URL = `${BASE_API_ENDPOINT}api/chat/get_messages/`;
 
 function Chat() {
 
@@ -84,9 +85,7 @@ function Chat() {
     </main>
   )
 }
-
-
-const GET_REPLY_URL = 'http://127.0.0.1:8000/api/chat/get_reply/';
+const GET_REPLY_URL = `${BASE_API_ENDPOINT}api/chat/get_reply/`;
 
 const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
 

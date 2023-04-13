@@ -15,7 +15,7 @@ import { useAuthContext } from './contexts/AuthContext';
 
 import axios from 'axios';
 
-const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
+import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 
 function Copyright(props) {
   return (

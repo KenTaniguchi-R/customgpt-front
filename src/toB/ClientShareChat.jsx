@@ -39,7 +39,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useShareCodeState } from '../customHooks/useShareCodeState';
 
-const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
+import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 
 
 const ClientShareChat = () => {
