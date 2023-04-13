@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from './contexts/AuthContext';
 
@@ -35,15 +34,12 @@ export default function SignUp() {
   const {setIsAuth, setHasPermC} = useAuthContext();
   const from_C = !window.location.href.includes("client");
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     let data = new FormData(event.currentTarget);
     data.append('is_company', !from_C);
 
-    await axios.post(`${BASE_API_ENDPOINT}api/register/`, data);
-    let res = await axios.post(`${BASE_API_ENDPOINT}api/token/`, data);
+    let res = await axios.post(`${BASE_API_ENDPOINT}api/register/`, data);
 
     // Store the login info in local storage
     localStorage.setItem('access_token', res.data.access);
@@ -51,11 +47,6 @@ export default function SignUp() {
 
     setIsAuth(true);
     setHasPermC(res.data.is_toC);
-    if (res.data.is_toC){
-      navigate('/home');
-    }else{
-      navigate('/client/home');
-    }
   };
 
   return (
