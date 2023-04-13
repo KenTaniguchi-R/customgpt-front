@@ -26,8 +26,6 @@ import NavOuter from './outers/NavOuter';
 import EmptySidebarOuter from './outers/EmptySidebarOuter';
 import ChatInfoSidebarOuter from './outers/ChatInfoSidebarOuter';
 
-BASE_URL = 'customgpt-front';
-
 const PrivateRoute = ( {children} ) => {
   const {isAuth} = useAuthContext();
   if (isAuth) {
@@ -74,33 +72,33 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: `/${BASE_URL}`,
+      path: "/",
       element: <NavOuter />,
       errorElement: <ErrorPage />,
       children: [
         {
-          path: "/",
+          path: "",
           element: <LPtoC />,
           errorElement: <ErrorPage />,
         },
         {
-          path: "/client",
+          path: "client",
           element: <LPtoB />,
         },
         {
-          path: "/login",
+          path: "login",
           element: <UnauthorizedRoute><LogIn /></UnauthorizedRoute>,
         },
         {
-          path: "/client/login",
+          path: "client/login",
           element: <UnauthorizedRoute><Login /></UnauthorizedRoute>,
         },
         {
-          path: "/signup",
+          path: "signup",
           element: <UnauthorizedRoute><SignUp /></UnauthorizedRoute>,
         },
         {
-          path: "/client/signup",
+          path: "client/signup",
           element: <UnauthorizedRoute><SignUp /></UnauthorizedRoute>,
         },
         {
@@ -111,7 +109,7 @@ function App() {
           element: <EmptySidebarOuter />,
           children: [
             {
-              path: "/home",
+              path: "home",
               element: <PrivateToCRoute><UserHomeView /></PrivateToCRoute>,
             },
             {
