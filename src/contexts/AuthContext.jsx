@@ -25,8 +25,6 @@ export const AuthProvider = ({ children }) => {
     permC = parseJwt(localStorage.getItem('access_token')).is_toC;
   }
 
-  console.log('permC: ', permC)
-
   const [isAuth, setIsAuth] = useState(auth);
   const [hasPermC, setHasPermC] = useState(permC);
 

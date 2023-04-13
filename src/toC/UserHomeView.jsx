@@ -21,7 +21,6 @@ import axios from 'axios';
 const UserHomeView = () => {
 
   const {chats, setChats} = useChatsState();
-  console.log(chats)
 
   return (
     <Grid container id="chat_list" spacing={2} padding={3} alignItems="stretch">

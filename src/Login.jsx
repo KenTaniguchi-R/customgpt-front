@@ -29,7 +29,6 @@ export default function LogIn() {
     }
     let data = await axios.post('http://localhost:8000/api/token/', user);
     data = data.data;
-    console.log(data)
 
     // Initialize the access & refresh token in localstorage.
     localStorage.clear();

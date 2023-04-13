@@ -7,7 +7,6 @@ export const useCustomState = ({init, url}) => {
   useEffect(() => {
     const get_data = async () => {
       try {
-        console.log(url)
         const res = await axios.get(url);
         setState(res.data);
       } catch (error) {
