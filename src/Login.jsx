@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -14,7 +13,9 @@ import axios from 'axios';
 
 import { useAuthContext } from './contexts/AuthContext';
 import { redirect } from "react-router-dom";
+import GoogleLoginOption from './components/GoogleLogin';
 
+import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 
 export default function LogIn() {
 
@@ -27,7 +28,7 @@ export default function LogIn() {
       email: event.target.email.value,
       password: event.target.password.value,
     }
-    let data = await axios.post('http://localhost:8000/api/token/', user);
+    let data = await axios.post(`${BASE_API_ENDPOINT}api/token/`, user);
     data = data.data;
 
     // Initialize the access & refresh token in localstorage.
@@ -42,7 +43,6 @@ export default function LogIn() {
     if (data.is_toC){
       redirect('/home');
     }else{
-      console.log("redirecting to client home")
       redirect('/client/home');
     }
   };
@@ -51,7 +51,6 @@ export default function LogIn() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
@@ -80,6 +79,9 @@ export default function LogIn() {
           </Grid>
         </Box>
       </Box>
+
+      <GoogleLoginOption />
+
       {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
     </Container>
   );

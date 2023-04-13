@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import { useAuthContext } from './contexts/AuthContext';
+import { GoogleLoginOption } from './components/GoogleLogin';
 
 import axios from 'axios';
 
@@ -109,6 +110,8 @@ export default function SignUp() {
           </Grid>
         </Box>
       </Box>
+
+      <GoogleLoginOption />
       {/* <Copyright sx={{ mt: 5 }} /> */}
     </Container>
   );
