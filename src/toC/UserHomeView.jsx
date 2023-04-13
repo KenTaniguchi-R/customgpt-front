@@ -1,0 +1,142 @@
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useChatsState } from '../customHooks/useChatsState';
+import axios from 'axios';
+
+const BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
+
+const UserHomeView = () => {
+
+  const {chats, setChats} = useChatsState();
+  console.log(chats)
+
+  return (
+    <Grid container id="chat_list" spacing={2} padding={3} alignItems="stretch">
+      <Grid item xs={12} sm={6} md={4} lg={3} maxWidth="md">
+        <CreateCard setChats={setChats} />
+      </Grid>
+      {chats.map((chat) => (
+        <Grid item xs={12} sm={6} md={4} lg={3}  key={chat.id} maxWidth="md" >
+          <ChatCard key={chat.id} {...chat} />
+        </Grid>
+      ))}
+    </Grid>
+  )
+}
+
+const CreateCard = ({setChats}) => {
+  const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+  const [codeInput, setCodeInput] = useState('');
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddChat = async (e) => {
+    e.preventDefault();
+
+    const res = await axios.post(`${BASE_API_ENDPOINT}api/chat/add_chat/`,{
+      share_code: codeInput
+    });
+    setChats((prev) => [res.data, ...prev ]);
+    handleClose();
+  }
+  return (
+    <>
+    <Card className='chat-list__card'>
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          新規追加
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          自作のチャットの作成、または既存のチャットに参加できます。
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={() => navigate('/new-chat/')}>作成</Button>
+        <Button size="small" onClick={handleClickOpen}>追加</Button>
+      </CardActions>
+    </Card>
+
+    <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>チャットの追加</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            与えられたコードをここに入力してください。チャットが見つかれば追加されます。
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="chat_code_field"
+            label="チャットコード"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={codeInput}
+            onChange={(e) => setCodeInput(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>キャンセル</Button>
+          <Button onClick={handleAddChat}>追加</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
+}
+
+const ChatCard = ({id, name, thumbnail, description, mine}) => {
+
+  return (
+    <Card className='chat-list__card'>
+      <CardMedia
+        sx={{ height: 200 }}
+        image={thumbnail}
+        title={name}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {name}
+        </Typography>
+        <Typography sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "2",
+            WebkitBoxOrient: "vertical",
+          }}
+          variant="body2" color="text.secondary">
+          {description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Link to={`../../chat/${id}` }><Button size="small">チャット</Button></Link>
+        { mine &&
+          <Link to={`../edit-chat/${id}` } relative='path'><Button size="small">設定</Button></Link>
+        }
+      </CardActions>
+    </Card>
+  )
+}
+
+export default UserHomeView
