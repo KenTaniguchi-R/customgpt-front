@@ -13,7 +13,6 @@ import { CircularProgress } from '@mui/material';
 import { Dialog } from '@mui/material';
 import { DialogTitle } from '@mui/material';
 import { DialogActions } from '@mui/material';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import { DropzoneArea } from "mui-file-dropzone";
 
@@ -23,6 +22,7 @@ import { useAuthContext } from './contexts/AuthContext';
 
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 import { redirect_to_home } from './utils/utils';
+import MyBreadcrumbs from './components/MyBreadcrumbs';
 
 
 const EditChat = () => {
@@ -97,10 +97,7 @@ const EditChat = () => {
 
   return (
     <div className='main-container__form'>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Typography className='pointer' onClick={()=>navigate(-1)}>ホーム</Typography>
-        <Typography color="text.primary">修正</Typography>
-      </Breadcrumbs>
+      <MyBreadcrumbs routes={['ホーム']} current='修正' />
 
       <h1>修正</h1>
       <form onSubmit={handleSubmit}>

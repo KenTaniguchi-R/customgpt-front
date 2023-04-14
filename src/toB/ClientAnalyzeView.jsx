@@ -26,7 +26,6 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import Breadcrumbs from '@mui/material/Breadcrumbs'
 
 import { useParams } from 'react-router-dom';
 
@@ -43,6 +42,7 @@ import {
 import { Line } from 'react-chartjs-2';
 
 import { useNavigate } from 'react-router-dom';
+import MyBreadcrumbs from '../components/MyBreadcrumbs'
 
 const ClientAnalyzeView = () => {
 
@@ -50,10 +50,7 @@ const ClientAnalyzeView = () => {
 
   return (
     <div className='main-container__analysis'>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Typography className='pointer' onClick={()=>navigate(-1)}>ホーム</Typography>
-        <Typography color="text.primary">データ解析</Typography>
-      </Breadcrumbs>
+      <MyBreadcrumbs routes={['ホーム']} current='データ解析' />
 
       <h1>データ解析</h1>
 

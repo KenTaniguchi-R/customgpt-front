@@ -34,7 +34,6 @@ import { DialogActions } from '@mui/material';
 import { FormControl } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { visuallyHidden } from '@mui/utils';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -42,6 +41,7 @@ import axios from 'axios';
 import { useShareCodeState } from '../customHooks/useShareCodeState';
 
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
+import MyBreadcrumbs from '../components/MyBreadcrumbs';
 
 
 const ClientShareChat = () => {
@@ -50,10 +50,7 @@ const ClientShareChat = () => {
 
   return (
     <div className='main-container__analysis'>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Typography className='pointer' onClick={()=>navigate(-1)}>ホーム</Typography>
-        <Typography color="text.primary">シェア</Typography>
-      </Breadcrumbs>
+      <MyBreadcrumbs routes={['ホーム']} current='シェア' />
 
       <h1>シェア</h1>
 

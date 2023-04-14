@@ -14,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { visuallyHidden } from '@mui/utils';
 
 import { useNavigate, useParams, Link } from 'react-router-dom';
@@ -24,6 +23,7 @@ import { Card } from '@mui/material';
 import { CardContent } from '@mui/material';
 
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
+import MyBreadcrumbs from '../components/MyBreadcrumbs';
 
 
 const ClientAnalyzeQuestion = () => {
@@ -32,11 +32,7 @@ const ClientAnalyzeQuestion = () => {
 
   return (
     <div className='main-container__analysis'>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Typography className='pointer' onClick={()=>navigate(-2)}>ホーム</Typography>
-        <Typography className='pointer' onClick={()=>navigate(-1)}>データ解析</Typography>
-        <Typography color="text.primary">詳細</Typography>
-      </Breadcrumbs>
+      <MyBreadcrumbs routes={['ホーム', 'データ解析']} current='詳細' />
 
       <h1>データ解析 詳細</h1>
 

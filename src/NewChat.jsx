@@ -19,9 +19,6 @@ import { FormLabel } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 import { DropzoneArea } from "mui-file-dropzone";
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Typography from '@mui/material/Typography';
-
 
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -31,6 +28,7 @@ import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 import useCustomReducer from './reducers/useCustomReducer';
 import { useAuthContext } from './contexts/AuthContext';
 import { redirect_to_home } from './utils/utils';
+import MyBreadcrumbs from './components/MyBreadcrumbs';
 
 const CREATE_CHAT_URL = `${BASE_API_ENDPOINT}api/chat/create_chat/`
 
@@ -79,10 +77,7 @@ const NewChat = () => {
 
   return (
     <div className='main-container__form'>
-      <Breadcrumbs aria-label="breadcrumb">
-        <Typography className='pointer' onClick={()=>navigate(-1)}>ホーム</Typography>
-        <Typography color="text.primary">新規作成</Typography>
-      </Breadcrumbs>
+      <MyBreadcrumbs routes={['ホーム']} current='新規作成' />
 
       <h1>新規作成</h1>
       <form onSubmit={handleSubmit}>
