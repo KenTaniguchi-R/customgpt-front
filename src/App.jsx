@@ -112,7 +112,7 @@ function App() {
           children: [
             {
               path: "change-password",
-              element: <PrivateToCRoute><ChangePassword /></PrivateToCRoute>,
+              element: <PrivateRoute><ChangePassword /></PrivateRoute>,
             }
           ]
         },
