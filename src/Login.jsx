@@ -8,10 +8,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
 
 import { useAuthContext } from './contexts/AuthContext';
+import useCustomReducer from './reducers/useCustomReducer';
 import { redirect } from "react-router-dom";
 import GoogleLoginOption from './components/GoogleLoginOption';
 
@@ -20,30 +22,39 @@ import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 export default function LogIn() {
 
   const {setIsAuth, setHasPermC} = useAuthContext();
+  const [loginState, loginDispatch] = useCustomReducer();
 
   const handleSubmit = async (event) => {
+    loginDispatch({ type: 'SUBMIT' });
     event.preventDefault();
 
     const user = {
       email: event.target.email.value,
       password: event.target.password.value,
     }
-    let data = await axios.post(`${BASE_API_ENDPOINT}api/token/`, user);
-    data = data.data;
+    try {
+      let data = await axios.post(`${BASE_API_ENDPOINT}api/token/`, user);
+      data = data.data;
 
-    // Initialize the access & refresh token in localstorage.
-    localStorage.clear();
-    localStorage.setItem('access_token', data.access);
-    localStorage.setItem('refresh_token', data.refresh);
-    axios.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem('access_token');
+      // Initialize the access & refresh token in localstorage.
+      localStorage.clear();
+      localStorage.setItem('access_token', data.access);
+      localStorage.setItem('refresh_token', data.refresh);
+      axios.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem('access_token');
 
-    setIsAuth(true);
-    setHasPermC(data.is_toC);
+      setIsAuth(true);
+      setHasPermC(data.is_toC);
 
-    if (data.is_toC){
-      redirect('/home');
-    }else{
-      redirect('/client/home');
+      loginDispatch({ type: 'SUCCESS' });
+
+      if (data.is_toC){
+        redirect('/home');
+      }else{
+        redirect('/client/home');
+      }
+    }catch{
+      alert("ログインに失敗しました。");
+      loginDispatch({ type: 'ERROR' });
     }
   };
 
@@ -63,7 +74,9 @@ export default function LogIn() {
           <TextField margin="normal" required fullWidth name="password" label="Password" type="password" id="password" autoComplete="current-password" />
 
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-            ログイン
+            {
+              loginState.isLoading ? <CircularProgress size={20} /> : "ログイン"
+            }
           </Button>
           <Grid container>
             <Grid item xs>
