@@ -38,7 +38,7 @@ const PrivateRoute = ( {children} ) => {
 const PrivateToCRoute = ( {children} ) => {
   const {isAuth, hasPermC} = useAuthContext();
   if (isAuth && hasPermC) {
-    return children ;
+    return children
   } else {
     return <Navigate  to='/' />;
   }
@@ -46,9 +46,8 @@ const PrivateToCRoute = ( {children} ) => {
 
 const PrivateToBRoute = ( {children} ) => {
   const {isAuth, hasPermC} = useAuthContext();
-  console.log(isAuth, hasPermC)
   if (isAuth && !hasPermC) {
-    return children ;
+    return children
   } else {
     return <Navigate  to='/client' />;
   }
@@ -58,12 +57,12 @@ const UnauthorizedRoute = ( {children} ) => {
   const {isAuth, hasPermC} = useAuthContext();
   if (isAuth) {
     if (hasPermC){
-      return <Navigate  to='/home' /> ;
+      return <Navigate  to='/home' />
     }else{
-      return <Navigate  to='/client/home' /> ;
+      return <Navigate  to='/client/home' />
     }
   } else {
-    return children;
+    return children
   }
 };
 
