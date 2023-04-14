@@ -33,8 +33,8 @@ const ClientAnalyzeQuestion = () => {
   return (
     <div className='main-container__analysis'>
       <Breadcrumbs aria-label="breadcrumb">
-        <Typography onClick={()=>navigate(-2)}>ホーム</Typography>
-        <Typography onClick={()=>navigate(-1)}>データ解析</Typography>
+        <Typography className='pointer' onClick={()=>navigate(-2)}>ホーム</Typography>
+        <Typography className='pointer' onClick={()=>navigate(-1)}>データ解析</Typography>
         <Typography color="text.primary">詳細</Typography>
       </Breadcrumbs>
 

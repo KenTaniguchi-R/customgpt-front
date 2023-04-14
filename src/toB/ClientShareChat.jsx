@@ -51,7 +51,7 @@ const ClientShareChat = () => {
   return (
     <div className='main-container__analysis'>
       <Breadcrumbs aria-label="breadcrumb">
-        <Typography onClick={()=>navigate(-1)}>ホーム</Typography>
+        <Typography className='pointer' onClick={()=>navigate(-1)}>ホーム</Typography>
         <Typography color="text.primary">シェア</Typography>
       </Breadcrumbs>
 

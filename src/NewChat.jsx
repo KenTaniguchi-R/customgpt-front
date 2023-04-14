@@ -80,7 +80,7 @@ const NewChat = () => {
   return (
     <div className='main-container__form'>
       <Breadcrumbs aria-label="breadcrumb">
-        <Typography onClick={()=>navigate(-1)}>ホーム</Typography>
+        <Typography className='pointer' onClick={()=>navigate(-1)}>ホーム</Typography>
         <Typography color="text.primary">新規作成</Typography>
       </Breadcrumbs>
 
