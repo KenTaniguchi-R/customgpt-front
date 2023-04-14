@@ -48,22 +48,24 @@ const ChatInfo = () => {
 const RoomList = ({handleRoom}) => {
 
   const {source} = useParams();
-  const rooms = useRoomsState({source_id: source});
+  const {rooms, setRooms} = useRoomsState({source_id: source});
 
   return (
     <List sx={{ width: '100%', overflow: 'auto', maxHeight: 400,}}>
-      <RoomItem room_id={-1} text='New Chat' type='new' handleRoom={handleRoom} />
+      <RoomItem room_id={-1} text='New Chat'
+        type='new' handleRoom={handleRoom} setRooms={setRooms} />
 
       {rooms.map((room) => (
-        <RoomItem room_id={room.id} text={room.messages} type='switch' handleRoom={handleRoom} />
+        <RoomItem room_id={room.id} text={room.messages}
+          type='switch' handleRoom={handleRoom} setRooms={setRooms} />
       ))}
     </List>
   )
 }
 
-const RoomItem = ({room_id, text, type, handleRoom}) => {
+const RoomItem = ({room_id, text, type, handleRoom, setRooms}) => {
   return (
-    <ListItem key={room_id} disablePadding width='100%' onClick={()=> handleRoom(room_id, type)}>
+    <ListItem key={room_id} disablePadding width='100%' onClick={()=> handleRoom(room_id, type, setRooms)}>
       <ListItemButton>
         <ListItemIcon>
           <ChatIcon />

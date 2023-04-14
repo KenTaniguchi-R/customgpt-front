@@ -27,8 +27,12 @@ function Chat() {
 
   const [messages, setMessages] = useState([]);
   const [room_id, setRoomId] = useState(null);
+  const {source} = useParams();
 
-  const handleGetRoom = async (next_room, type) => {
+  const handleGetRoom = async (next_room, type, setRooms) => {
+    const res = await axios.get(`${BASE_API_ENDPOINT}api/chat/get_rooms/${source}`);
+    setRooms(res.data);
+
     if (type === "new") {
       setRoomId(null);
       setMessages([]);

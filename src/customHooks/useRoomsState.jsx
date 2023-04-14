@@ -8,5 +8,5 @@ export const useRoomsState = ({source_id}) =>{
     url: `${BASE_API_ENDPOINT}api/chat/get_rooms/${source_id}`,
   })
 
-  return rooms;
+  return {rooms, setRooms};
 }
