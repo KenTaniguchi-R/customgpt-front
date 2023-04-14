@@ -8,7 +8,7 @@ import { GoogleLogin } from '@react-oauth/google';
 
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 
-export const GoogleLoginOption = () => {
+const GoogleLoginOption = () => {
 
   const {setIsAuth, setHasPermC} = useAuthContext();
 
@@ -46,3 +46,5 @@ export const GoogleLoginOption = () => {
   )
 
 }
+
+export default GoogleLoginOption;
