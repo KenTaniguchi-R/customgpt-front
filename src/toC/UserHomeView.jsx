@@ -11,11 +11,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useChatsState } from '../customHooks/useChatsState';
+import useCustomReducer from '../reducers/useCustomReducer';
 import axios from 'axios';
 
 const UserHomeView = () => {
@@ -41,6 +43,7 @@ const CreateCard = ({setChats}) => {
 
   const [open, setOpen] = useState(false);
   const [codeInput, setCodeInput] = useState('');
+  const [InputState, InputStateDispatch] = useCustomReducer();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,16 +51,27 @@ const CreateCard = ({setChats}) => {
 
   const handleClose = () => {
     setOpen(false);
+    InputStateDispatch({type: 'RESET'});
+    setCodeInput('');
   };
 
   const handleAddChat = async (e) => {
+    if (codeInput === '') return;
+
+    InputStateDispatch({type: 'RESET'});
+    InputStateDispatch({type: 'SUBMIT'});
     e.preventDefault();
 
-    const res = await axios.post(`${BASE_API_ENDPOINT}api/chat/add_chat/`,{
-      share_code: codeInput
-    });
-    setChats((prev) => [res.data, ...prev ]);
-    handleClose();
+    try{
+      const res = await axios.post(`${BASE_API_ENDPOINT}api/chat/add_chat/`,{
+        share_code: codeInput
+      });
+      setChats((prev) => [res.data, ...prev ]);
+      handleClose();
+      InputStateDispatch({type: 'SUCCESS'});
+    }catch{
+      InputStateDispatch({type: 'ERROR'});
+    }
   }
   return (
     <>
@@ -93,10 +107,15 @@ const CreateCard = ({setChats}) => {
             value={codeInput}
             onChange={(e) => setCodeInput(e.target.value)}
           />
+          { InputState.isError && <Typography color="text.primary">見つかりませんでした</Typography>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>キャンセル</Button>
-          <Button onClick={handleAddChat}>追加</Button>
+          <Button onClick={handleAddChat}>
+            {
+              InputState.isLoading ? <CircularProgress size={20} /> : '追加'
+            }
+          </Button>
         </DialogActions>
       </Dialog>
     </>

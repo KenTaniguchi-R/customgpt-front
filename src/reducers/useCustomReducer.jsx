@@ -30,6 +30,7 @@ const useCustomReducer = () => {
       case 'ERROR':
         return {
           ...state,
+          isLoading: false,
           isError: true,
         };
       case 'RESET':
