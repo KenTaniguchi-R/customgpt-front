@@ -89,7 +89,11 @@ const EditChat = () => {
           source: source_id,
         }
       )
-      navigate('/client/home/', { replace: true }) // TODO: 分け
+      if (hasPermC){
+        navigate('/home/', { replace: true })
+      }else{
+        navigate('/client/home/', { replace: true })
+      }
     }catch (error){
       console.log(error)
       setIsSent(false);
@@ -215,7 +219,6 @@ const DeleteButton = ({handleDelete}) => {
 
   const handleClickOpen = () => {
     setOpen(true);
-    console.log('joew')
   };
 
   const handleClose = () => {
