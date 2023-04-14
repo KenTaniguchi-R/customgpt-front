@@ -21,7 +21,9 @@ import Paper from '@mui/material/Paper';
 import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
+import InputAdornment from '@mui/material/InputAdornment';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Tooltip from '@mui/material/Tooltip';
 
 
 import { Dialog } from '@mui/material';
@@ -69,7 +71,8 @@ const ClientShareChat = () => {
 const SharePublic = () => {
 
   const source_id = useParams().source;
-  const {code, setCode} = useShareCodeState({source_id: source_id});
+  const code = useShareCodeState({source_id: source_id});
+  const [copied, setCopied] = useState(false);
 
   const [isPublic, setIsPublic] = useState(false);
 
@@ -88,6 +91,14 @@ const SharePublic = () => {
     })
   }
 
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code.code)
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000)
+  }
+
   return (
     <>
       <FormGroup>
@@ -99,10 +110,15 @@ const SharePublic = () => {
         <Typography variant="body2" gutterBottom component="div">
           このコードを共有すると、誰でもこのチャットに参加できます。クリックでコピーされます。
         </Typography>
-      <TextField fullWidth disabled id="share_id" value={code.code}
-        style={{ cursor: 'pointer' }}
-        onClick={() => {navigator.clipboard.writeText(code.code)}}
-        />
+        <Tooltip title={copied ? 'コピーしました': 'クリックでコピー'}>
+          <TextField fullWidth disabled id="share_id" value={code.code}
+            style={{ cursor: 'pointer' }}
+            onClick={handleCopy}
+            InputProps={{
+              startAdornment: <InputAdornment position="start"><ContentCopyIcon /></InputAdornment>,
+            }}
+            />
+        </Tooltip>
       </>
         }
     </>

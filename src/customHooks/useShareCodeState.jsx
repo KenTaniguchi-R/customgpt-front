@@ -8,5 +8,5 @@ export const useShareCodeState = ({source_id}) =>{
     url: `${BASE_API_ENDPOINT}api/chat/get_share_code/${source_id}`
   })
 
-  return {code, setCode};
+  return code;
 }
