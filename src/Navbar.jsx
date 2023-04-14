@@ -19,6 +19,7 @@ import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 const Navbar = () => {
 
   const { isAuth, hasPermC } = useAuthContext();
+  const navigate = useNavigate();
 
   let home = '/';
   if (isAuth && hasPermC) {
@@ -97,7 +98,7 @@ const NavbarLoggedIn = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={()=> navigate('/my-account/')}>My account</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
