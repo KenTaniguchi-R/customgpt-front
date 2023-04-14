@@ -17,7 +17,6 @@ import { FormControlLabel } from '@mui/material';
 import { FormControl } from '@mui/material';
 import { FormLabel } from '@mui/material';
 import { InputLabel } from '@mui/material';
-import { FormHelperText } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 import { DropzoneArea } from "mui-file-dropzone";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -29,6 +28,8 @@ import { useNavigate } from "react-router-dom";
 
 
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
+import CustomReducer from './reducers/CustomRecuder';
+
 const CREATE_CHAT_URL = `${BASE_API_ENDPOINT}api/chat/create_chat/`
 
 
@@ -178,12 +179,21 @@ const SourceDialog = ({open, handleClose, handleConfirm, type, state, setState})
     default:
   }
 
+  const [ getMoreState, getMoreDispatch ] = CustomReducer();
+
   const handleFindUrl = async() => {
-    const res = await axios.post(`${BASE_API_ENDPOINT}api/chat/find_more_url/`,{
-      urls: state
-    });
-    const url = res.data.urls;
-    setState(url);
+    if (state === null || state === '') return;
+    getMoreDispatch({type: 'SUBMIT'});
+    try{
+      const res = await axios.post(`${BASE_API_ENDPOINT}api/chat/find_more_url/`,{
+        urls: state
+      });
+      const url = res.data.urls;
+      setState(url);
+      getMoreDispatch({type: 'SUCCESS'});
+    }catch{
+      getMoreDispatch({type: 'RESET'});
+    }
   }
 
   return (
@@ -196,7 +206,11 @@ const SourceDialog = ({open, handleClose, handleConfirm, type, state, setState})
         {field}
       </DialogContent>
       <DialogActions>
-        {type === 'url' && <Button onClick={handleFindUrl} style={{flex: '1 0 0'}}>URLを取得</Button>}
+        {type === 'url' &&
+          <Button onClick={handleFindUrl} style={{flex: '1 0 0'}}>
+            {getMoreState.isLoading? <CircularProgress size={20} />: 'URLを取得'}
+          </Button>
+        }
         <Button onClick={handleClose} style={{flex: '1 0 0'}}>キャンセル</Button>
         <Button onClick={() => handleConfirm(type)} style={{flex: '1 0 0'}}>確定</Button>
       </DialogActions>
