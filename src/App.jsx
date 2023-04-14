@@ -25,6 +25,8 @@ import ClientShareChat from './toB/ClientShareChat';
 import NavOuter from './outers/NavOuter';
 import EmptySidebarOuter from './outers/EmptySidebarOuter';
 import ChatInfoSidebarOuter from './outers/ChatInfoSidebarOuter';
+import MyAccountSidebarOuter from './outers/MyAccountSidebarOuter';
+import ChangePassword from './myAccount/ChangePassword';
 
 const PrivateRoute = ( {children} ) => {
   const {isAuth} = useAuthContext();
@@ -103,6 +105,16 @@ function App() {
         {
           path: "chat/:source",
           element: <PrivateRoute><Chat /></PrivateRoute>,
+        },
+        {
+          path: "my-account",
+          element: <MyAccountSidebarOuter />,
+          children: [
+            {
+              path: "change-password",
+              element: <PrivateToCRoute><ChangePassword /></PrivateToCRoute>,
+            }
+          ]
         },
         {
           element: <EmptySidebarOuter />,
