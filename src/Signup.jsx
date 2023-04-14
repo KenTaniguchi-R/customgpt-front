@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import { useAuthContext } from './contexts/AuthContext';
-import { GoogleLoginOption } from './components/GoogleLogin';
+import GoogleLoginOption from './components/GoogleLoginOption';
 
 import axios from 'axios';
 

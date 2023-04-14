@@ -13,7 +13,7 @@ import axios from 'axios';
 
 import { useAuthContext } from './contexts/AuthContext';
 import { redirect } from "react-router-dom";
-import GoogleLoginOption from './components/GoogleLogin';
+import GoogleLoginOption from './components/GoogleLoginOption';
 
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 
