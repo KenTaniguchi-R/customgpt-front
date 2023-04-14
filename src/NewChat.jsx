@@ -29,6 +29,8 @@ import { useNavigate } from "react-router-dom";
 
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 import useCustomReducer from './reducers/useCustomReducer';
+import { useAuthContext } from './contexts/AuthContext';
+import { redirect_to_home } from './utils/utils';
 
 const CREATE_CHAT_URL = `${BASE_API_ENDPOINT}api/chat/create_chat/`
 
@@ -41,6 +43,7 @@ const NewChat = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [AImodel, setAImodel] = useState('GPT 3.5');
   const [isSent, setIsSent] = useState(false);
+  const { hasPermC } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -63,7 +66,9 @@ const NewChat = () => {
           }
         }
       )
-      navigate('/client/home/', { replace: true })
+
+      redirect_to_home(navigate, hasPermC)
+
     }catch (error){
       console.log(error)
       setIsSent(false);

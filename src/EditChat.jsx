@@ -22,6 +22,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from './contexts/AuthContext';
 
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
+import { redirect_to_home } from './utils/utils';
 
 
 const EditChat = () => {
@@ -68,15 +69,11 @@ const EditChat = () => {
           }
         }
       )
-      if (hasPermC){
-        navigate('/home/', { replace: true })
-      }else{
-        navigate('/client/home/', { replace: true })
-      }
+      redirect_to_home(navigate, hasPermC);
+
     }catch (error){
       console.log(error)
       setIsSent(false);
-      alert('エラーが発生しました。')
     }
 
   }
@@ -89,11 +86,8 @@ const EditChat = () => {
           source: source_id,
         }
       )
-      if (hasPermC){
-        navigate('/home/', { replace: true })
-      }else{
-        navigate('/client/home/', { replace: true })
-      }
+      redirect_to_home(navigate, hasPermC);
+
     }catch (error){
       console.log(error)
       setIsSent(false);
@@ -248,8 +242,6 @@ const DeleteButton = ({handleDelete}) => {
 }
 
 const DeleteModal = ({ onClose, open, handleDelete }) => {
-
-  console.log(open)
 
   return (
     <Dialog onClose={onClose} open={open}>
