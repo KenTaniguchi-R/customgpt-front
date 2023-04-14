@@ -13,7 +13,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuthContext } from './contexts/AuthContext';
 
-const VITE_BASE_API_ENDPOINT = import.meta.env.VITE_BASE_API_ENDPOINT;
+import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 
 
 const Navbar = () => {
@@ -61,7 +61,7 @@ const NavbarLoggedIn = () => {
     localStorage.removeItem('refresh_token');
 
     // Send a logout request to the server
-    const res = await axios.post(`${VITE_BASE_API_ENDPOINT}api/logout/`, {
+    const res = await axios.post(`${BASE_API_ENDPOINT}api/logout/`, {
       refresh_token: localStorage.getItem('refresh_token')
     });
     axios.defaults.headers.common['Authorization'] = null;
