@@ -9,8 +9,10 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { useAuthContext } from './contexts/AuthContext';
+import useCustomReducer from './reducers/useCustomReducer';
 import GoogleLoginOption from './components/GoogleLoginOption';
 
 import axios from 'axios';
@@ -33,21 +35,31 @@ function Copyright(props) {
 export default function SignUp() {
 
   const {setIsAuth, setHasPermC} = useAuthContext();
+  const [signupState, signupDispatch] = useCustomReducer();
   const from_C = !window.location.href.includes("client");
 
   const handleSubmit = async (event) => {
+    signupDispatch({ type: 'SUBMIT' });
     event.preventDefault();
     let data = new FormData(event.currentTarget);
     data.append('is_company', !from_C);
 
-    let res = await axios.post(`${BASE_API_ENDPOINT}api/register/`, data);
+    try{
+      let res = await axios.post(`${BASE_API_ENDPOINT}api/register/`, data);
+      // Store the login info in local storage
+      localStorage.setItem('access_token', res.data.access);
+      localStorage.setItem('refresh_token', res.data.refresh);
 
-    // Store the login info in local storage
-    localStorage.setItem('access_token', res.data.access);
-    localStorage.setItem('refresh_token', res.data.refresh);
-
-    setIsAuth(true);
-    setHasPermC(res.data.is_toC);
+      setIsAuth(true);
+      setHasPermC(res.data.is_toC);
+      signupDispatch({ type: 'SUCCESS' });
+    }catch{
+      signupDispatch({ type: 'ERROR' });
+      setTimeout(() => {
+        signupDispatch({ type: 'RESET' });
+      }, 1000);
+      alert("登録に失敗しました。");
+    }
   };
 
   return (
@@ -98,8 +110,9 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
+          >{
+              signupState.isLoading ? <CircularProgress size={20} /> : 'Sign Up'
+          }
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
