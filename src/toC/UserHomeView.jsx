@@ -66,9 +66,7 @@ const CreateCard = ({setChats}) => {
       const res = await axios.post(`${BASE_API_ENDPOINT}api/chat/add_chat/`,{
         share_code: codeInput
       });
-      setChats((prev) => [res.data, ...prev ]);
-      handleClose();
-      InputStateDispatch({type: 'SUCCESS'});
+      navigate(`/chat/${res.data.id}/`);
     }catch{
       InputStateDispatch({type: 'ERROR'});
     }
