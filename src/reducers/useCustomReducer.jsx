@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-const CustomReducer = () => {
+const useCustomReducer = () => {
 
   let initialState = {
     input: '',
@@ -49,4 +49,4 @@ const CustomReducer = () => {
 
 }
 
-export default CustomReducer;
+export default useCustomReducer;

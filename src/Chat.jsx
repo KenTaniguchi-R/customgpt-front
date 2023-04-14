@@ -18,6 +18,7 @@ import Sidebar from './Sidebar'
 import { OpenLink } from './components/OpenLink';
 import { useChatInfoState } from './customHooks/useChatInfoState';
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
+import useCustomReducer from './reducers/useCustomReducer';
 
 
 const GET_ROOM_MESSAGES_URL = `${BASE_API_ENDPOINT}api/chat/get_messages/`;
@@ -91,42 +92,7 @@ const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
 
   const source_id = useParams().source;
 
-  const init_input = {
-    input: '',
-    isLoading: false,
-    isError: false,
-  };
-
-  const InputReducer = (state, action) => {
-    switch (action.type) {
-      case 'INPUT':
-        return {
-          ...state,
-          input: action.payload,
-        };
-      case 'SUBMIT':
-        return {
-          ...state,
-          isLoading: true,
-          isError: false,
-        };
-      case 'SUCCESS':
-        return {
-          ...state,
-          input: '',
-          isLoading: false,
-        };
-      case 'ERROR':
-        return {
-          ...state,
-          isError: true,
-        };
-      default:
-        return state;
-    }
-  }
-
-  const [inputState, inputDispatch] = useReducer(InputReducer, init_input);
+  const [inputState, inputDispatch] = useCustomReducer();
   const messagesEndRef = createRef();
 
   const source = useChatInfoState({source_id: source_id});

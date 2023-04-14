@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
 
 
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
-import CustomReducer from './reducers/CustomRecuder';
+import useCustomReducer from './reducers/useCustomReducer';
 
 const CREATE_CHAT_URL = `${BASE_API_ENDPOINT}api/chat/create_chat/`
 
@@ -179,7 +179,7 @@ const SourceDialog = ({open, handleClose, handleConfirm, type, state, setState})
     default:
   }
 
-  const [ getMoreState, getMoreDispatch ] = CustomReducer();
+  const [ getMoreState, getMoreDispatch ] = useCustomReducer();
 
   const handleFindUrl = async() => {
     if (state === null || state === '') return;
