@@ -95,6 +95,7 @@ const CreateCard = ({setChats}) => {
             与えられたコードをここに入力してください。チャットが見つかれば追加されます。
           </DialogContentText>
           <TextField
+            {...(InputState.isError && {error: true, helperText: '見つかりませんでした'})}
             autoFocus
             margin="dense"
             id="chat_code_field"
@@ -105,7 +106,6 @@ const CreateCard = ({setChats}) => {
             value={codeInput}
             onChange={(e) => setCodeInput(e.target.value)}
           />
-          { InputState.isError && <Typography color="text.primary">見つかりませんでした</Typography>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>キャンセル</Button>
