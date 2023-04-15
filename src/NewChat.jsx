@@ -237,19 +237,26 @@ const CustomDropzone = ({type, label, state, setState}) => {
             acceptedFiles={['image/*']}
             filesLimit={1}
             required
+            showFileNames
+            dropzoneText="ファイルを選択してください"
             onChange={(files) => setState(files[0])}
           /> :
           type === 'pdf' ?
             <DropzoneArea
               acceptedFiles={['.pdf']}
-              filesLimit={1}
+              filesLimit={2}
               required
-              onChange={(files) => setState(files[0])}
+              showFileNames
+              dropzoneText="ファイルを選択してください"
+              maxFileSize={5000000}
+              onChange={(files) => setState(files)}
             />:
               <DropzoneArea
                 acceptedFiles={['.csv']}
                 filesLimit={1}
                 required
+                showFileNames
+                dropzoneText="ファイルを選択してください"
                 onChange={(files) => setState(files[0])}
               />
       }
