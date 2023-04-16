@@ -122,11 +122,13 @@ const CreateCard = ({setChats}) => {
 
 const ChatCard = ({id, name, thumbnail, description, mine}) => {
 
+  const image = thumbnail ? thumbnail.thumbnail : null;
+
   return (
     <Card className='chat-list__card'>
       <CardMedia
         sx={{ height: 200 }}
-        image={thumbnail}
+        image={image}
         title={name}
       />
       <CardContent>

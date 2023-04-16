@@ -23,7 +23,7 @@ const ClientHomeView = () => {
       </Grid>
       {chats.map((chat) => (
         <Grid item xs={12} sm={6} md={4} lg={3}  key={chat.id} maxWidth="md" >
-          <ChatCard key={chat.id} chat_id={chat.id} name={chat.name} image={chat.thumbnail} description={chat.description}/>
+          <ChatCard key={chat.id} chat_id={chat.id} name={chat.name} thumbnail={chat.thumbnail} description={chat.description}/>
         </Grid>
       ))}
     </Grid>
@@ -49,7 +49,10 @@ const CreateCard = () => {
   )
 }
 
-const ChatCard = ({chat_id, name, image, description}) => {
+const ChatCard = ({chat_id, name, thumbnail, description}) => {
+
+  const image = thumbnail ? thumbnail.thumbnail : null;
+
   return (
     <Card className='chat-list__card'>
       <CardMedia

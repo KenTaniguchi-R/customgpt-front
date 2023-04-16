@@ -29,10 +29,12 @@ const ChatInfo = () => {
   const {source} = useParams();
   const chatInfo = useChatInfoState({source_id: source});
 
+  const image = chatInfo.thumbnail ? chatInfo.thumbnail.thumbnail : null;
+
   return (
     <div className='chat-info'>
       <div style={{textAlign: 'center'}}>
-        <img src={chatInfo.thumbnail} alt="プレビュー" width="80%" />
+        <img src={image} alt="プレビュー" width="80%" />
       </div>
       <div>
         <p>{chatInfo.name}</p>
