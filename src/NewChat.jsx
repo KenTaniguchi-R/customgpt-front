@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Grid, TextField } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -37,13 +37,35 @@ const NewChat = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [source, setSource] = useState(null);
+  const [converted, setConverted] = useState([]);
   const [type, setType] = useState('');
   const [imagePreview, setImagePreview] = useState(null);
   const [AImodel, setAImodel] = useState('GPT 3.5');
   const [isSent, setIsSent] = useState(false);
   const { hasPermC } = useAuthContext();
 
+  const session_key = useRef('');
+
+  // let session_key = '';
+
   const navigate = useNavigate();
+
+  useEffect( () => {
+    if (source === null){
+      return;
+    }
+    axios.post(`${BASE_API_ENDPOINT}api/chat/get_converted/`, {
+      source: source,
+      type: type,
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      setConverted(res.data.upsert_data)
+      session_key.current = res.data.session_key
+    })
+  }, [source])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,7 +76,7 @@ const NewChat = () => {
       await axios.post(CREATE_CHAT_URL, {
           title: title,
           description: description,
-          source: source,
+          session_key: session_key.current,
           type: type,
           imagePreview: imagePreview,
           AImodel: AImodel,
@@ -72,7 +94,6 @@ const NewChat = () => {
       setIsSent(false);
       alert('エラーが発生しました。')
     }
-
   }
 
   return (
