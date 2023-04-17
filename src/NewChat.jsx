@@ -19,6 +19,12 @@ import { FormLabel } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 import { DropzoneArea } from "mui-file-dropzone";
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
@@ -29,6 +35,7 @@ import useCustomReducer from './reducers/useCustomReducer';
 import { useAuthContext } from './contexts/AuthContext';
 import { redirect_to_home } from './utils/utils';
 import MyBreadcrumbs from './components/MyBreadcrumbs';
+import useNewChatReducer from './reducers/useNewChatReducer';
 
 const CREATE_CHAT_URL = `${BASE_API_ENDPOINT}api/chat/create_chat/`
 
@@ -42,34 +49,11 @@ const NewChat = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [AImodel, setAImodel] = useState('GPT 3.5');
   const [isSent, setIsSent] = useState(false);
-  const { hasPermC } = useAuthContext();
 
   const session_key = useRef('');
 
-  // let session_key = '';
-
-  const navigate = useNavigate();
-
-  useEffect( () => {
-    if (source === null){
-      return;
-    }
-    axios.post(`${BASE_API_ENDPOINT}api/chat/get_converted/`, {
-      source: source,
-      type: type,
-    }, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(res => {
-      setConverted(res.data.upsert_data)
-      session_key.current = res.data.session_key
-    })
-  }, [source])
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSent(true);
 
     try{
 
@@ -87,7 +71,7 @@ const NewChat = () => {
         }
       )
 
-      redirect_to_home(navigate, hasPermC)
+      setIsSent(true);
 
     }catch (error){
       console.log(error)
@@ -104,7 +88,8 @@ const NewChat = () => {
       <form onSubmit={handleSubmit}>
         <div className='field-container'>
           <div className='form-field'>
-            <DocTypeList setState={setSource} type={type} setType={setType} />
+            <DocTypeList state={source} setState={setSource} type={type} setType={setType}
+              converted={converted} setConverted={setConverted} session_key={session_key} />
           </div>
           <div className='form-field'>
             <CustomTextField id="title-input" label="タイトル" state={title} setState={setTitle} rows={1} />
@@ -124,54 +109,72 @@ const NewChat = () => {
           </div>
         </div>
       </form>
+      {isSent && <SubmitNotice />}
     </div>
   )
 }
 
-const DocTypeList = ({ setState, type, setType }) => {
+const DocTypeList = ({ state, setState, type, setType, converted, setConverted, session_key={session_key} }) => {
 
-  const [open, setOpen] = useState(false);
   const [tempState, setTempState] = useState(null);
   const [tempType, setTempType] = useState('pdf');
 
+  const [modalState, modalStateDispatch] = useNewChatReducer();
+
   const handleClickOpen = (new_type) => {
     setTempType(new_type);
-    setOpen(true);
+    modalStateDispatch({type: 'MODAL_OPEN'});
   };
 
   const handleClose = () => {
-    setOpen(false);
+    modalStateDispatch({type: 'MODAL_CLOSE'});
   };
 
-  const handleConfirm = (new_type) => {
-    setOpen(false);
+  const handleConfirm = async () => {
+    modalStateDispatch({type: 'SEND_REQUEST'});
+    let res = await axios.post(`${BASE_API_ENDPOINT}api/chat/get_converted/`, {
+      source: tempState,
+      type: tempType,
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    setConverted(res.data.upsert_data)
+    session_key.current = res.data.session_key;
     setState(tempState);
-    setType(new_type);
+    setType(tempType);
+    modalStateDispatch({type: 'SHOW_EXTRACTED'});
   }
 
   return (
     <>
     <Grid container id="chat_list" spacing={2} padding={3} alignItems="stretch">
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="pdf" current={type} label='PDFから作成' icon={<PictureAsPdfIcon />} handleClickOpen={handleClickOpen} />
+        <DocTypeButton type="pdf" current={type} label='PDFから作成' icon={<PictureAsPdfIcon />} handleClickOpen={() => handleClickOpen('pdf')} />
       </Grid>
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="url" current={type} label='URLから作成' icon={<HttpIcon />} handleClickOpen={handleClickOpen} />
+        <DocTypeButton type="url" current={type} label='URLから作成' icon={<HttpIcon />} handleClickOpen={() => handleClickOpen('url')} />
       </Grid>
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="csv" current={type} label='CSVから作成' icon={<BorderAllIcon />} handleClickOpen={handleClickOpen} />
+        <DocTypeButton type="csv" current={type} label='CSVから作成' icon={<BorderAllIcon />} handleClickOpen={() => handleClickOpen('csv')} />
       </Grid>
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="text" current={type} label='テキストから作成' icon={<TextFieldsIcon />} handleClickOpen={handleClickOpen} />
+        <DocTypeButton type="text" current={type} label='テキストから作成' icon={<TextFieldsIcon />} handleClickOpen={() => handleClickOpen('text')} />
       </Grid>
     </Grid>
-    <SourceDialog open={open} handleClose={handleClose} handleConfirm={handleConfirm}
-      type={tempType} state={tempState} setState={setTempState}/>
+    { modalState.isOpen && !modalState.showExtracted ?
+      <SourceDialog handleClose={handleClose} handleConfirm={handleConfirm}
+        type={tempType} state={tempState} setState={setTempState} modalState={modalState}/>:
+      modalState.isOpen && modalState.showExtracted ?
+      <ExtractedSource handleClose={handleClose} converted={converted} modalStateDispatch={modalStateDispatch}/>:
+      <></>
+    }
   </>
   )
 }
 
-const SourceDialog = ({open, handleClose, handleConfirm, type, state, setState}) => {
+const SourceDialog = ({handleClose, handleConfirm, type, state, setState, modalState}) => {
 
   let title;
   let description;
@@ -218,7 +221,7 @@ const SourceDialog = ({open, handleClose, handleConfirm, type, state, setState})
   }
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open onClose={handleClose}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -233,7 +236,48 @@ const SourceDialog = ({open, handleClose, handleConfirm, type, state, setState})
           </Button>
         }
         <Button onClick={handleClose} style={{flex: '1 0 0'}}>キャンセル</Button>
-        <Button onClick={() => handleConfirm(type)} style={{flex: '1 0 0'}}>確定</Button>
+        <Button onClick={() => handleConfirm(type)} style={{flex: '1 0 0'}}>{
+          modalState.isLoading? <CircularProgress size={20} />: '確定'}</Button>
+      </DialogActions>
+    </Dialog>
+  )
+
+}
+
+const ExtractedSource = ({handleClose, state, setState, converted, modalStateDispatch}) => {
+
+  const handleEdit = () => {
+    modalStateDispatch({type: 'CANCEL_EXTRACTED'});
+  }
+
+  return (
+    <Dialog open>
+      <DialogTitle>読み込みテキスト</DialogTitle>
+      <DialogContent>
+        {
+          converted.map((item, index) => {
+            return (
+              <Accordion key={index}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>{item[1]}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    {item[0]}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            )
+          })
+        }
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleEdit} style={{flex: '1 0 0'}}>変更</Button>
+        <Button onClick={handleClose} style={{flex: '1 0 0'}}>閉じる</Button>
       </DialogActions>
     </Dialog>
   )
@@ -326,6 +370,43 @@ const SubmitButton = ({isSent}) => {
       <Button variant="contained" disabled><CircularProgress size={25}/></Button>
     }
     </>
+  )
+}
+
+const SubmitNotice = () => {
+  const {hasPermC} = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    redirect_to_home(navigate, hasPermC);
+  }
+
+  // back to home after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      redirect_to_home(navigate, hasPermC);
+    }, 10000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <Dialog
+      open
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"チャットを作成中です。"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          作成が完了次第ホーム画面に追加されます。10秒後に自動的にホーム画面に戻ります。
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>
+          ホームへ戻る
+        </Button>
+      </DialogActions>
+    </Dialog>
   )
 }
 
