@@ -72,8 +72,6 @@ function Chat() {
     <main className="main-container">
       <Grid container alignItems="stretch" sx={{height:'100%'}}>
         <Grid item xs={0} md={3} lg={2} className='sidebar'
-          direction="column"
-          justifyContent="flex-start"
           display={{ xs: "none", md: 'block' }}
         >
           <Sidebar
@@ -160,7 +158,7 @@ const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
 const ChatList = ({messages, inputState}) => {
   return (
     <div className='chat'>
-      <ChatMessage key={-2} text="ご質問はありますか？" from="them" reference="" />
+      <ChatMessage key={-3} text="ご質問はありますか？" from="them" reference="" />
       {
         messages.map((message) => {
           return (
@@ -170,7 +168,7 @@ const ChatList = ({messages, inputState}) => {
         }
       { inputState.isLoading &&
         <>
-        <ChatMessage key={-1} text={inputState.input} from="me" reference="" />
+        <ChatMessage key={-2} text={inputState.input} from="me" reference="" />
         <ChatMessage key={-1} text={<CircularProgress size={20} />} from="them" reference="" />
         </>
       }

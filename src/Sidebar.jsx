@@ -58,7 +58,7 @@ const RoomList = ({handleRoom}) => {
         type='new' handleRoom={handleRoom} setRooms={setRooms} />
 
       {rooms.map((room) => (
-        <RoomItem room_id={room.id} text={room.messages}
+        <RoomItem key={room.id} room_id={room.id} text={room.messages}
           type='switch' handleRoom={handleRoom} setRooms={setRooms} />
       ))}
     </List>

@@ -109,7 +109,7 @@ function App() {
         },
         {
           path: "my-account",
-          element: <MyAccountSidebarOuter />,
+          element: <PrivateRoute><MyAccountSidebarOuter /></PrivateRoute>,
           children: [
             {
               path: "change-password",

@@ -360,9 +360,9 @@ const CustomRadioSelect = ({id, label, options, state, setState}) => {
     <FormControl component="fieldset">
       <FormLabel component="legend">{label}</FormLabel>
       <RadioGroup aria-label={id} name={id} defaultValue={state} value={state} onChange={(e)=>{setState(e.target.value)}}>
-        {options.map((option) => {
+        {options.map((option, index) => {
           return (
-            <FormControlLabel value={option} control={<Radio />} label={option} />
+            <FormControlLabel key={index}  value={option} control={<Radio />} label={option} />
           )
         })}
       </RadioGroup>

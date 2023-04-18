@@ -6,10 +6,8 @@ import Sidebar from '../Sidebar'
 
 const ChatInfoSidebarOuter = () => {
   return (
-    <Grid container alignItems="stretch" sx={{height:'100%'}}>
+    <Grid container sx={{height:'100%'}}>
       <Grid item xs={0} md={3} lg={2} className='sidebar'
-        direction="column"
-        justifyContent="flex-start"
         display={{ xs: "none", md: 'block' }}
       >
         <Sidebar has_chat_info={true} />

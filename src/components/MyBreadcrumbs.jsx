@@ -13,7 +13,7 @@ const MyBreadcrumbs = ({ routes, current }) => {
       {
         routes.map((route, index) => {
           return (
-            <Typography className='pointer' onClick={()=>navigate(-1*(routes.length-index))}>{route}</Typography>
+            <Typography key={index} className='pointer' onClick={()=>navigate(-1*(routes.length-index))}>{route}</Typography>
           )
         })
       }
