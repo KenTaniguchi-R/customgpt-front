@@ -18,6 +18,7 @@ import GoogleLoginOption from './components/GoogleLoginOption';
 import axios from 'axios';
 
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -38,6 +39,8 @@ export default function SignUp() {
   const [signupState, signupDispatch] = useCustomReducer();
   const from_C = !window.location.href.includes("client");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     signupDispatch({ type: 'SUBMIT' });
     event.preventDefault();
@@ -46,13 +49,18 @@ export default function SignUp() {
 
     try{
       let res = await axios.post(`${BASE_API_ENDPOINT}api/register/`, data);
-      // Store the login info in local storage
-      localStorage.setItem('access_token', res.data.access);
-      localStorage.setItem('refresh_token', res.data.refresh);
 
-      setIsAuth(true);
-      setHasPermC(res.data.is_toC);
-      signupDispatch({ type: 'SUCCESS' });
+      if (res.status === 201 ){
+        navigate('/signup/done');
+      }else{
+        // Store the login info in local storage
+        localStorage.setItem('access_token', res.data.access);
+        localStorage.setItem('refresh_token', res.data.refresh);
+
+        setIsAuth(true);
+        setHasPermC(res.data.is_toC);
+        signupDispatch({ type: 'SUCCESS' });
+      }
     }catch{
       signupDispatch({ type: 'ERROR' });
       setTimeout(() => {

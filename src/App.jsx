@@ -28,6 +28,8 @@ import ChatInfoSidebarOuter from './outers/ChatInfoSidebarOuter';
 import MyAccountSidebarOuter from './outers/MyAccountSidebarOuter';
 import ChangePassword from './myAccount/ChangePassword';
 import ChangePlan from './myAccount/ChangePlan';
+import Waiting from './EVerify/Waiting';
+import Verified from './EVerify/Verified';
 
 const PrivateRoute = ( {children} ) => {
   const {isAuth} = useAuthContext();
@@ -102,6 +104,14 @@ function App() {
         {
           path: "client/signup",
           element: <UnauthorizedRoute><SignUp /></UnauthorizedRoute>,
+        },
+        {
+          path: "signup/done",
+          element: <Waiting />,
+        },
+        {
+          path: "user/:activation_token/activation",
+          element: <Verified />,
         },
         {
           path: "chat/:source",
