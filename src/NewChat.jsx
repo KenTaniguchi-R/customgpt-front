@@ -34,8 +34,10 @@ import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 import useCustomReducer from './reducers/useCustomReducer';
 import { useAuthContext } from './contexts/AuthContext';
 import { redirect_to_home } from './utils/utils';
+import { get_chat_limit } from './utils/check_plan';
 import MyBreadcrumbs from './components/MyBreadcrumbs';
 import useNewChatReducer from './reducers/useNewChatReducer';
+import { usePlanContext } from './contexts/PlanContext';
 
 const CREATE_CHAT_URL = `${BASE_API_ENDPOINT}api/chat/create_chat/`
 
@@ -176,18 +178,21 @@ const DocTypeList = ({ state, setState, type, setType, converted, setConverted, 
 
 const SourceDialog = ({handleClose, handleConfirm, type, state, setState, modalState}) => {
 
+  const { myPlan } = usePlanContext();
+  let limits = get_chat_limit(myPlan);
+
   let title;
   let description;
   let field;
   switch (type) {
     case 'pdf':
       title = 'PDFから作成';
-      description = 'PDFファイルアップロードしてください。最大5MBまでです。';
+      description = `PDFファイルアップロードしてください。${limits.pdf_t}`;
       field = <CustomDropzone type="pdf" state={state} setState={setState} />
       break;
     case 'url':
       title = 'URLから作成';
-      description = 'URLを入力してください。複数のURLを入力する場合は改行してください。最大10個まで取得されます。';
+      description = `URLを入力してください。複数のURLを入力する場合は改行してください。${limits.url_t}`;
       field = <CustomTextField id="url-input" state={state} setState={setState} rows={10} multiline />
       break;
     case 'csv':
@@ -293,6 +298,10 @@ const DocTypeButton = ({type, current, label, icon, handleClickOpen}) => {
 }
 
 const CustomDropzone = ({type, label, state, setState}) => {
+
+  const { myPlan } = usePlanContext();
+  let limits = get_chat_limit(myPlan);
+
   return (
     <>
       <InputLabel component="legend">{label}</InputLabel>
@@ -313,7 +322,7 @@ const CustomDropzone = ({type, label, state, setState}) => {
               required
               showFileNames
               dropzoneText="ファイルを選択してください"
-              maxFileSize={5000000}
+              maxFileSize={limits.pdf * 1000000}
               onChange={(files) => setState(files)}
             />:
               <DropzoneArea

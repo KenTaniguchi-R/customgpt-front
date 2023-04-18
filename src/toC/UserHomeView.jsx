@@ -60,7 +60,7 @@ const CreateCard = ({setChats}) => {
   };
 
   const handleCreateChat = () => {
-    if (check_chat_num(myPlan, chats.length)){ // TODO: chats.length - enterprize chats
+    if (check_chat_num(myPlan, 5)){ // TODO: chats.length - enterprize chats
       navigate('/new-chat/');
     }else{
       alert('チャットの作成数が上限に達しています。');

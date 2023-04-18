@@ -12,14 +12,18 @@ export const PlanProvider = ({ children }) => {
 
   const [myPlan, setMyPlan] = useState(my_plan);
 
-  useEffect(() => {
-    if (localStorage.getItem('access_token') !== null) {
-      axios.get(`${BASE_API_ENDPOINT}api/account/my_plan/`)
-      .then(res => {
-        setMyPlan(res.data);
-      })
-    }
-  })
+  if (localStorage.getItem('access_token') !== null) {
+    axios.get(`${BASE_API_ENDPOINT}api/account/my_plan/`)
+    .then(res => {
+      setMyPlan(res.data);
+
+      return (
+        <PlanContext.Provider value={{ myPlan, setMyPlan }}>
+          {children}
+        </PlanContext.Provider>
+      )
+    })
+  }
 
   return (
     <PlanContext.Provider value={{ myPlan, setMyPlan }}>
