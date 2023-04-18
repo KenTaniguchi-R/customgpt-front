@@ -8,36 +8,29 @@ import { redirect_to_home } from '../utils/utils';
 import { useAuthContext } from '../contexts/AuthContext';
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 
-const Verified = () => {
+const ShareActivate = () => {
 
   const navigate = useNavigate();
-  const { setIsAuth, setHasPermC } = useAuthContext();
+  const { IsAuth } = useAuthContext();
 
   const params = useParams();
   const activation_token = params.activation_token;
-  const [state, setState] = useState({'text': '認証中です。', 'sub': 'しばらくお待ちください。'});
+  const [state, setState] = useState({'text': '追加中です。', 'sub': 'しばらくお待ちください。'});
 
   useEffect(() => {
-    const res = axios.get(`${BASE_API_ENDPOINT}api/user/${activation_token}/activation/`);
+    const res = axios.get(`${BASE_API_ENDPOINT}api/chat/share/${activation_token}/activation/`);
     res.then((res) => {
       if (res.status === 200){
-        setState({'text': '認証に成功しました。', 'sub': '3秒後にホームページに移動します。'});
-
-        localStorage.setItem('access_token', res.data.access);
-        localStorage.setItem('refresh_token', res.data.refresh);
-
-        setIsAuth(true);
-        setHasPermC(res.data.is_toC);
+        setState({'text': 'チャットを追加しました', 'sub': '3秒後にホームページに移動します。'});
 
         setTimeout(() => {
           redirect_to_home(navigate, res.data.is_toC);
         }, 3000);
       }else{
-        setState({'text': '認証に失敗しました。', 'sub': 'もう一度登録をお願いします。'});
+        setState({'text': '招待されたメールアドレスでログインしてください。', 'sub': ''});
       }
-    }
-      ).catch((err) => {
-        setState({'text': '認証に失敗しました。', 'sub': 'もう一度登録をお願いします。'});
+    }).catch((err) => {
+        setState({'text': '招待されたメールアドレスでログインしてください。', 'sub': ''});
       }
     );
   }, []);
@@ -62,4 +55,4 @@ const Verified = () => {
   );
 }
 
-export default Verified;
+export default ShareActivate;

@@ -28,8 +28,9 @@ import ChatInfoSidebarOuter from './outers/ChatInfoSidebarOuter';
 import MyAccountSidebarOuter from './outers/MyAccountSidebarOuter';
 import ChangePassword from './myAccount/ChangePassword';
 import ChangePlan from './myAccount/ChangePlan';
-import Waiting from './EVerify/Waiting';
-import Verified from './EVerify/Verified';
+import Waiting from './activate/Waiting';
+import Verified from './activate/Verified';
+import ShareActivate from './activate/ShareActivate';
 
 const PrivateRoute = ( {children} ) => {
   const {isAuth} = useAuthContext();
@@ -112,6 +113,10 @@ function App() {
         {
           path: "user/:activation_token/activation",
           element: <Verified />,
+        },
+        {
+          path: "shared/:activation_token/activation",
+          element: <ShareActivate />,
         },
         {
           path: "chat/:source",
