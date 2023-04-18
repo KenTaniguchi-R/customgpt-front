@@ -62,11 +62,13 @@ const NavbarLoggedIn = () => {
     localStorage.removeItem('refresh_token');
 
     // Send a logout request to the server
-    const res = await axios.post(`${BASE_API_ENDPOINT}api/logout/`, {
-      refresh_token: localStorage.getItem('refresh_token')
-    });
-    axios.defaults.headers.common['Authorization'] = null;
-    setIsAuth(false);
+    try{
+      const res = await axios.post(`${BASE_API_ENDPOINT}api/logout/`, {
+        refresh_token: localStorage.getItem('refresh_token')
+      });
+      axios.defaults.headers.common['Authorization'] = null;
+      setIsAuth(false);
+    }catch(err){}
     // Redirect the user to the login page
     navigate('/');
   }
