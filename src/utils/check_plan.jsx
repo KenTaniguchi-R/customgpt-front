@@ -39,4 +39,16 @@ const get_chat_limit = (myPlan) => {
   return LIMIT[myPlan];
 }
 
-export { check_chat_num, get_chat_limit }
+const check_message_num = (myPlan, message_num) => {
+  // return true if message_num is less than limit, meaning user can send message
+  // return false if message_num is more than limit, meaning user cannot send message
+  const LIMIT = {
+    1: 10,
+    2: 100,
+    3: 1000,
+    4: 10000,
+  }
+  return LIMIT[myPlan] > message_num;
+}
+
+export { check_chat_num, get_chat_limit, check_message_num }

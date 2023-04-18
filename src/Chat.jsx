@@ -1,4 +1,4 @@
-import { useState, createRef, useReducer } from 'react'
+import { useState, createRef, useReducer, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 
 import './App.css'
@@ -10,7 +10,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Grid } from '@mui/material';
+import { Grid, Alert } from '@mui/material';
 
 import axios from 'axios'
 
@@ -19,6 +19,9 @@ import { OpenLink } from './components/OpenLink';
 import { useChatInfoState } from './customHooks/useChatInfoState';
 import BASE_API_ENDPOINT from './vars/BASE_API_ENDPOINT';
 import useCustomReducer from './reducers/useCustomReducer';
+import { useCountMessageState } from './customHooks/useCountMessageState';
+import { usePlanContext } from './contexts/PlanContext';
+import { check_message_num } from './utils/check_plan';
 
 
 const GET_ROOM_MESSAGES_URL = `${BASE_API_ENDPOINT}api/chat/get_messages/`;
@@ -94,6 +97,9 @@ const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
 
   const source_id = useParams().source;
 
+  const [countToday, setCountToday] = useCountMessageState();
+  const { myPlan } = usePlanContext();
+
   const [inputState, inputDispatch] = useCustomReducer();
   const messagesEndRef = createRef();
 
@@ -128,6 +134,7 @@ const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
       setRoomId(response.data.room_id)
       setMessages([...messages, ...reply_message])
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+      setCountToday(countToday + 1);
 
       inputDispatch({ type: 'SUCCESS' });
 
@@ -144,12 +151,16 @@ const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
         <div ref={messagesEndRef} />
       </div>
       <div className='input-container'>
-        <TextField id="outlined-basic" label="質問" multiline variant="outlined" margin="normal" fullWidth
-          value={inputState.input} onChange={(e) => inputDispatch({ type: 'INPUT', payload: e.target.value })}
-          InputProps={{
-            endAdornment: <InputAdornment position="end" className='send-btn' onClick={handleSendMessage} >send</InputAdornment>,
-          }}
-        />
+        {
+          check_message_num(myPlan, countToday) ?
+          <TextField id="outlined-basic" label="質問" multiline variant="outlined" margin="normal" fullWidth
+            value={inputState.input} onChange={(e) => inputDispatch({ type: 'INPUT', payload: e.target.value })}
+            InputProps={{
+              endAdornment: <InputAdornment position="end" className='send-btn' onClick={handleSendMessage} >send</InputAdornment>,
+            }}
+          />:
+          <Alert severity="error">1日に送れるメッセージの上限に達しました。プランをアップグレードすることで、メッセージの上限を増やすことができます。</Alert>
+        }
       </div>
     </section>
   )
