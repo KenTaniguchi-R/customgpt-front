@@ -18,6 +18,9 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useChatsState } from '../customHooks/useChatsState';
 import useCustomReducer from '../reducers/useCustomReducer';
+
+import { usePlanContext } from '../contexts/PlanContext';
+import { check_chat_num } from '../utils/check_plan';
 import axios from 'axios';
 
 const UserHomeView = () => {
@@ -41,6 +44,7 @@ const UserHomeView = () => {
 const CreateCard = ({setChats}) => {
   const navigate = useNavigate();
 
+  const { myPlan } = usePlanContext();
   const [open, setOpen] = useState(false);
   const [codeInput, setCodeInput] = useState('');
   const [InputState, InputStateDispatch] = useCustomReducer();
@@ -54,6 +58,14 @@ const CreateCard = ({setChats}) => {
     InputStateDispatch({type: 'RESET'});
     setCodeInput('');
   };
+
+  const handleCreateChat = () => {
+    if (check_chat_num(myPlan, chats.length)){ // TODO: chats.length - enterprize chats
+      navigate('/new-chat/');
+    }else{
+      alert('チャットの作成数が上限に達しています。');
+    }
+  }
 
   const handleAddChat = async (e) => {
     if (codeInput === '') return;
@@ -83,7 +95,7 @@ const CreateCard = ({setChats}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => navigate('/new-chat/')}>作成</Button>
+        <Button size="small" onClick={handleCreateChat}>作成</Button>
         <Button size="small" onClick={handleClickOpen}>追加</Button>
       </CardActions>
     </Card>
