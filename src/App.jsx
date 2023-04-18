@@ -27,6 +27,7 @@ import EmptySidebarOuter from './outers/EmptySidebarOuter';
 import ChatInfoSidebarOuter from './outers/ChatInfoSidebarOuter';
 import MyAccountSidebarOuter from './outers/MyAccountSidebarOuter';
 import ChangePassword from './myAccount/ChangePassword';
+import ChangePlan from './myAccount/ChangePlan';
 
 const PrivateRoute = ( {children} ) => {
   const {isAuth} = useAuthContext();
@@ -113,6 +114,10 @@ function App() {
             {
               path: "change-password",
               element: <PrivateRoute><ChangePassword /></PrivateRoute>,
+            },
+            {
+              path: "change-plan",
+              element: <PrivateRoute><ChangePlan /></PrivateRoute>,
             }
           ]
         },
@@ -164,7 +169,7 @@ function App() {
         },
       ]
     },
-  ], { basename: "/customgpt-front" }); //TODO: change to /customgpt-front when deploying
+  ], { basename: "/customgpt-front" });
 
   return (
     <RouterProvider router={router} />

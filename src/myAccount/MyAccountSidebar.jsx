@@ -6,12 +6,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import LockIcon from '@mui/icons-material/Lock';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 const MyAccountSidebar = () => {
 
   const links = [
     {name: 'パスワードを変更', path: '/my-account/change-password', icon: <LockIcon />},
-    {name: 'Chats', path: '/my-account/chats', icon: <LockIcon />},
+    {name: 'プランの変更', path: '/my-account/change-plan', icon: <LocalOfferIcon />},
     {name: 'Rooms', path: '/my-account/rooms', icon: <LockIcon />},
   ]
 
