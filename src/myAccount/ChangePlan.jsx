@@ -7,7 +7,7 @@ import MyBreadcrumbs from '../components/MyBreadcrumbs';
 import Typography from '@mui/material/Typography';
 import CheckIcon from '@mui/icons-material/Check';
 import { Card, CardContent, Button, Grid } from '@mui/material';
-import { usePlanState } from '../customHooks/usePlanState';
+import { usePlanContext } from '../contexts/PlanContext';
 
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
 
@@ -95,12 +95,13 @@ const ChangePlan = () => {
 
 function PricingPage() {
 
-  const [ planId, setPlanId ] = usePlanState();
+  const { myPlan, setMyPlan } = usePlanContext();
+
 
   const handlePlanChange = async (plan_id) => {
     const res = await axios.post(`${BASE_API_ENDPOINT}api/account/my_plan/`, {
       'plan_id': plan_id });
-      setPlanId(res.data);
+      setMyPlan(res.data);
   }
 
   return (
@@ -108,7 +109,7 @@ function PricingPage() {
       {plans.map((plan, index) => (
         <Grid item xs={12} sm={6} md={3} key={index}>
           {/* change background color if index+1 === plan */}
-          <Card style={index+1 === planId ? selectedCardStyle : cardStyle}>
+          <Card style={index+1 === myPlan ? selectedCardStyle : cardStyle}>
             {/* <CardHeader title={plan.title} style={titleStyle} /> */}
             <CardContent style={contentStyle}>
             <Typography variant='h2' sx={{ fontSize: 25 }} gutterBottom>
@@ -129,7 +130,7 @@ function PricingPage() {
             </CardContent>
             <div style={buttonStyle}>
               {
-                index+1 === planId ?
+                index+1 === myPlan ?
                 <Button variant="contained" color="primary" disabled>
                   {`現在のプラン`}
                 </Button>:

@@ -20,7 +20,7 @@ const MyAccountSidebar = () => {
       <aside>
         <List sx={{ width: '100%', overflow: 'auto', maxHeight: 400,}}>
           {
-            links.map((link) => <MyAccountSidebarLink {...link} />)
+            links.map((link, index) => <MyAccountSidebarLink key={index} {...link} />)
           }
         </List>
       </aside>
