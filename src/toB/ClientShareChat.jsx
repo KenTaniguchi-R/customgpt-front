@@ -1,10 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
 
-import Navbar from '../Navbar'
-import Sidebar from '../Sidebar'
-import { OpenLink } from '../components/OpenLink'
-import { useShareState } from '../customHooks/useShareState';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
@@ -103,7 +98,6 @@ const SharePublic = () => {
       </FormGroup>
       { isPublic &&
       <>
-      {/* TODO: コピーされたらお知らせ */}
         <Typography variant="body2" gutterBottom component="div">
           このコードを共有すると、誰でもこのチャットに参加できます。クリックでコピーされます。
         </Typography>

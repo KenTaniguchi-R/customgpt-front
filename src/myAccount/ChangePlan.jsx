@@ -98,7 +98,6 @@ function PricingPage() {
   const [ planId, setPlanId ] = usePlanState();
 
   const handlePlanChange = async (plan_id) => {
-    console.log('plan_id: ', plan_id)
     const res = await axios.post(`${BASE_API_ENDPOINT}api/account/my_plan/`, {
       'plan_id': plan_id });
       setPlanId(res.data);
