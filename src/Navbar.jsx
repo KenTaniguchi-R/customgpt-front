@@ -70,7 +70,7 @@ const NavbarLoggedIn = () => {
       setIsAuth(false);
     }catch(err){}
     // Redirect the user to the login page
-    navigate('/');
+    window.location.href = '/';
   }
 
   return (

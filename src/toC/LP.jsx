@@ -1,6 +1,5 @@
 import { Container, Box, Grid, Typography, Card, Button, Divider,
-  CardContent, CardActions, CardMedia, CardHeader, IconButton, CardActionArea,
-    } from '@mui/material';
+  CardContent } from '@mui/material';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import BorderAllIcon from '@mui/icons-material/BorderAll';
@@ -15,7 +14,6 @@ const LPtoC = () => {
   const styles = {
     container: {
       paddingBottom: '10rem',
-      // backgroundColor: 'red',
     },
     box: {
       display: 'flex',
@@ -317,7 +315,9 @@ const PlanList = ({styles}) => {
                 </ul>
                 {
                   plan.title === 'Enterprise' &&
-                  <Button variant='contained' color='primary'>団体向けページへ</Button>
+                  <Link to={'/client'}>
+                    <Button variant='contained' color='primary'>団体向けページへ</Button>
+                  </Link>
                 }
               </CardContent>
             </Card>
