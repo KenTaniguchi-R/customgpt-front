@@ -14,7 +14,7 @@ import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useChatsState } from '../customHooks/useChatsState';
 import useCustomReducer from '../reducers/useCustomReducer';
@@ -25,12 +25,22 @@ import axios from 'axios';
 
 const UserHomeView = () => {
 
-  const {chats, setChats} = useChatsState();
+  const {chats} = useChatsState();
+
+  const mineCount = useRef(0);
+
+  useEffect(() => {
+    let count = 0;
+    chats.forEach((chat) => {
+      if (chat.mine) count++;
+    });
+    mineCount.current = count;
+  }, [chats])
 
   return (
     <Grid container id="chat_list" spacing={2} padding={3} alignItems="stretch">
       <Grid item xs={12} sm={6} md={4} lg={3} maxWidth="md">
-        <CreateCard setChats={setChats} />
+        <CreateCard mineCount={mineCount} />
       </Grid>
       {chats.map((chat) => (
         <Grid item xs={12} sm={6} md={4} lg={3}  key={chat.id} maxWidth="md" >
@@ -41,7 +51,7 @@ const UserHomeView = () => {
   )
 }
 
-const CreateCard = ({setChats}) => {
+const CreateCard = ({mineCount}) => {
   const navigate = useNavigate();
 
   const { myPlan } = usePlanContext();
@@ -60,7 +70,7 @@ const CreateCard = ({setChats}) => {
   };
 
   const handleCreateChat = () => {
-    if (check_chat_num(myPlan, 5)){ // TODO: chats.length - enterprize chats
+    if (check_chat_num(myPlan, mineCount.current)){
       navigate('/new-chat/');
     }else{
       alert('チャットの作成数が上限に達しています。');
