@@ -15,7 +15,7 @@ const GoogleLoginOption = () => {
   const handleLogin = async (credentialResponse) => {
     const res = await axios.post(`${BASE_API_ENDPOINT}api/login_with_google/`, {
       credentialResponse: credentialResponse,
-      is_company: !window.location.href.includes("client")
+      is_company: window.location.href.includes("client")
     });
     let data = res.data;
 
