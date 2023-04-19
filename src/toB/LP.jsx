@@ -78,7 +78,7 @@ const LPtoB = () => {
             </Link>
           </Grid>
           <Grid item md={7} style={styles.image_box}>
-            <img src="../analysis.png" alt="チャットページ" style={styles.image}/>
+            <img src="analysis.png" alt="チャットページ" style={styles.image}/>
           </Grid>
         </Grid>
 
@@ -113,7 +113,7 @@ const LPtoB = () => {
 
         <Grid container rowSpacing={3} columnSpacing={5} style={styles.section}>
           <Grid item md={7} style={styles.image_box}>
-            <img src="../analysis.png" alt="チャットページ" style={{width: '100%'}}/>
+            <img src="analysis.png" alt="チャットページ" style={{width: '100%'}}/>
           </Grid>
           <Grid item md={5}>
             <Typography variant='h2' style={styles.title2}>
@@ -137,7 +137,7 @@ const LPtoB = () => {
             </Typography>
           </Grid>
           <Grid item md={7} style={styles.image_box}>
-            <img src="../chatpage.png" alt="チャットページ" style={{width: '100%'}}/>
+            <img src="chatpage.png" alt="チャットページ" style={{width: '100%'}}/>
           </Grid>
         </Grid>
 
