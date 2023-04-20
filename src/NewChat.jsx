@@ -137,20 +137,28 @@ const DocTypeList = ({ state, setState, type, setType, converted, setConverted, 
   };
 
   const handleConfirm = async () => {
-    modalStateDispatch({type: 'SEND_REQUEST'});
-    let res = await axios.post(`${BASE_API_ENDPOINT}api/chat/get_converted/`, {
-      source: tempState,
-      type: tempType,
-    }, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
+    try{
+      if (tempType === null){
+        return
       }
-    })
-    setConverted(res.data.upsert_data)
-    session_key.current = res.data.session_key;
-    setState(tempState);
-    setType(tempType);
-    modalStateDispatch({type: 'SHOW_EXTRACTED'});
+
+      modalStateDispatch({type: 'SEND_REQUEST'});
+      let res = await axios.post(`${BASE_API_ENDPOINT}api/chat/get_converted/`, {
+        source: tempState,
+        type: tempType,
+      }, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      setConverted(res.data.upsert_data)
+      session_key.current = res.data.session_key;
+      setState(tempState);
+      setType(tempType);
+      modalStateDispatch({type: 'SHOW_EXTRACTED'});
+    }catch{
+      modalStateDispatch({type: 'ERROR'});
+    }
   }
 
   return (
@@ -240,13 +248,16 @@ const SourceDialog = ({handleClose, handleConfirm, type, state, setState, modalS
       </DialogContent>
       <DialogActions>
         {type === 'url' &&
-          <Button onClick={handleFindUrl} style={{flex: '1 0 0'}}>
-            {getMoreState.isLoading? <CircularProgress size={20} />: 'URLを取得'}
-          </Button>
+            getMoreState.isLoading ?
+            <Button style={{flex: '1 0 0'}}><CircularProgress size={20} /></Button>:
+            <Button onClick={handleFindUrl} style={{flex: '1 0 0'}}>URLを取得</Button>
         }
         <Button onClick={handleClose} style={{flex: '1 0 0'}}>キャンセル</Button>
-        <Button onClick={() => handleConfirm(type)} style={{flex: '1 0 0'}}>{
-          modalState.isLoading? <CircularProgress size={20} />: '確定'}</Button>
+        {
+          modalState.isLoading ?
+          <Button style={{flex: '1 0 0'}}><CircularProgress size={20} /></Button>:
+          <Button onClick={() => handleConfirm(type)} style={{flex: '1 0 0'}}>確定</Button>
+        }
       </DialogActions>
     </Dialog>
   )

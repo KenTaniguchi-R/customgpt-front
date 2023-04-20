@@ -23,6 +23,8 @@ const useNewChatReducer = () => {
         return {
           ...state,
           isOpen: false,
+          isLoading: false,
+          isError: false,
         };
       case 'SEND_REQUEST':
         return {

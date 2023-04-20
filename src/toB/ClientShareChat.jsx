@@ -436,8 +436,6 @@ const AddDialog = ({open, handleClose}) => {
       source: source,
     })
 
-    console.log(res )
-
     if (res.status === 200) {
       handleClose();
       setText('');
