@@ -52,6 +52,7 @@ const NewChat = () => {
   const [AImodel, setAImodel] = useState('GPT 3.5');
   const [isSent, setIsSent] = useState(false);
 
+  const { hasPermC } = useAuthContext();
   const session_key = useRef('');
 
   const handleSubmit = async (event) => {
@@ -102,9 +103,12 @@ const NewChat = () => {
           <div className='form-field'>
             <CustomDropzone type="image" label="サムネイル画像 (1つのみ)" state={imagePreview} setState={setImagePreview} />
           </div>
-          <div className='form-field'>
-            <CustomRadioSelect id="radio-choice" label="モデル選択" options={['GPT 3.5', 'GPT 4']} state={AImodel} setState={setAImodel} />
-          </div>
+          {
+            !hasPermC &&
+            <div className='form-field'>
+              <CustomRadioSelect id="radio-choice" label="モデル選択" options={['GPT 3.5', 'GPT 4']} state={AImodel} setState={setAImodel} />
+            </div>
+          }
 
           <div className='form-field'>
             <SubmitButton isSent={isSent} />

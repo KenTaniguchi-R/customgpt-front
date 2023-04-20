@@ -108,6 +108,12 @@ const headCells = [
     label: '日付',
   },
   {
+    id: 'model_type',
+    numeric: false,
+    disablePadding: false,
+    label: 'モデル',
+  },
+  {
     id: 'question',
     numeric: false,
     disablePadding: false,
@@ -193,6 +199,7 @@ function EnhancedTable() {
         let hour = ("0"+ date.getHours()).slice(-2);
         let minute = ("0" + date.getMinutes()).slice(-2);
         temp_messages[i]['date_created'] = `${year}/${month}/${day} ${hour}:${minute}`
+        temp_messages[i]['model_type'] =temp_messages[i]['model_type']['name']
       }
       setMessages(temp_messages)
     }
@@ -302,6 +309,9 @@ function EnhancedTable() {
                         <TableCell width="10%" align="left">
                           {row.date_created}
                         </TableCell>
+                        <TableCell width="10%" align="left">
+                          {row.model_type}
+                        </TableCell>
                         <TableCell width="35%" align="left">
                           { dense? <Typography
                               sx={{
@@ -318,7 +328,7 @@ function EnhancedTable() {
                             </>
                             }
                         </TableCell>
-                        <TableCell width="55%" align="left">
+                        <TableCell width="45%" align="left">
                           { dense? <Typography
                             sx={{
                               overflow: "hidden",
