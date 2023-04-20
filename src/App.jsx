@@ -31,7 +31,7 @@ import ChangePlan from './myAccount/ChangePlan';
 import Waiting from './activate/Waiting';
 import Verified from './activate/Verified';
 import ShareActivate from './activate/ShareActivate';
-import UsageView from './myAccount/Usage';
+// import UsageView from './myAccount/Usage';
 
 const PrivateRoute = ( {children} ) => {
   const {isAuth} = useAuthContext();
