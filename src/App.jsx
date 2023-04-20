@@ -135,10 +135,10 @@ function App() {
               path: "change-plan",
               element: <PrivateRoute><ChangePlan /></PrivateRoute>,
             },
-            {
-              path: "usage",
-              element: <PrivateRoute><UsageView /></PrivateRoute>,
-            },
+            // {
+            //   path: "usage",
+            //   element: <PrivateRoute><UsageView /></PrivateRoute>,
+            // },
           ]
         },
         {
