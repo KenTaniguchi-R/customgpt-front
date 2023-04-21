@@ -10,6 +10,8 @@ import { Card, CardContent, Button, Grid } from '@mui/material';
 import { usePlanContext } from '../contexts/PlanContext';
 
 import BASE_API_ENDPOINT from '../vars/BASE_API_ENDPOINT';
+import { useAuthContext } from '../contexts/AuthContext';
+import { user_plans, client_plans } from '../vars/Plans';
 
 const cardStyle = {
   height: '100%',
@@ -51,34 +53,6 @@ const buttonStyle = {
   marginBottom: '1rem',
 };
 
-const plans = [
-  {
-    title: 'Free',
-    description: 'お試し用',
-    price: '$0.00',
-    features: ['企業チャット利用無料', '個人チャット2つまで', 'メッセージ上限 10回/日', 'PDFファイル上限 2MB', '読み取りURL上限 3つ'],
-  },
-  {
-    title: 'Starter',
-    description: '個人ライトユーザー向け',
-    price: '$9.99',
-    features: ['企業チャット利用無料', '個人チャット10個まで', 'メッセージ上限 100回/日', 'PDFファイル上限 5MB', '読み取りURL上限 10個'],
-  },
-  {
-    title: 'Pro',
-    description: '個人利用の最高峰',
-    price: '$29.99',
-    features: ['企業チャット利用無料', '個人チャット無制限', 'メッセージ上限 1000回/日', 'PDFファイル上限 5MB', '読み取りURL上限 100個'],
-  },
-  {
-    title: 'Enterprise',
-    description: '企業向け',
-    price: 'カスタム',
-    features: ['利用ユーザーの使用負担なし', 'チャット解析機能', 'PDFファイル上限 5MB', '読み取りURL上限 1000個'],
-  },
-];
-
-
 const ChangePlan = () => {
 
   const navigate = useNavigate();
@@ -97,6 +71,13 @@ function PricingPage() {
 
   const { myPlan, setMyPlan } = usePlanContext();
 
+  const { hasPermC } = useAuthContext();
+  let plans;
+  if (hasPermC){
+    plans = user_plans;
+  }else{
+    plans = client_plans;
+  }
 
   const handlePlanChange = async (plan_id) => {
     const res = await axios.post(`${BASE_API_ENDPOINT}api/account/my_plan/`, {

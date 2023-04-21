@@ -137,7 +137,7 @@ function App() {
             },
             {
               path: "usage",
-              element: <PrivateRoute><UsageView /></PrivateRoute>,
+              element: <PrivateToBRoute><UsageView /></PrivateToBRoute>,
             },
           ]
         },

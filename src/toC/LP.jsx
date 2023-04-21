@@ -270,19 +270,19 @@ const PlanList = ({styles}) => {
     {
       title: 'Starter',
       description: '個人ライトユーザー向け',
-      price: '$9.99',
+      price: '未定',
       features: ['企業チャット利用無料', '個人チャット一度に10個まで', 'メッセージ上限 100回/日', 'PDFファイル上限 5MB', '読み取りURL上限 10個'],
     },
     {
       title: 'Pro',
       description: '個人利用の最高峰',
-      price: '$29.99',
+      price: '未定',
       features: ['企業チャット利用無料', '個人チャット無制限', 'メッセージ上限 1000回/日', 'PDFファイル上限 5MB', '読み取りURL上限 100個'],
     },
     {
       title: 'Enterprise',
       description: '企業向け',
-      price: 'カスタム',
+      price: '未定',
       features: ['利用ユーザーの使用負担なし', 'チャット共有', 'チャット解析機能', 'PDFファイル上限 5MB', '読み取りURL上限 1000個'],
     },
   ];

@@ -10,14 +10,24 @@ import DataUsageIcon from '@mui/icons-material/DataUsage';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import GroupsIcon from '@mui/icons-material/Groups';
 
+import { useAuthContext } from '../contexts/AuthContext';
+
 const MyAccountSidebar = () => {
+
+  const { hasPermC } = useAuthContext();
 
   const links = [
     {name: 'パスワードを変更', path: '/my-account/change-password', icon: <LockIcon />},
     {name: 'プランの変更', path: '/my-account/change-plan', icon: <LocalOfferIcon />},
+  ]
+  const links2 = [
     {name: '利用状況', path: '/my-account/usage', icon: <DataUsageIcon />},
     {name: 'グループの管理', path: '/my-account/group', icon: <GroupsIcon />},
   ]
+
+  if (hasPermC) {
+    links.push(...links2);
+  }
 
   return (
       <aside>

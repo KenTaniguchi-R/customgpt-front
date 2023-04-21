@@ -32,7 +32,7 @@ const Navbar = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          <Link to={home} style={{color: 'white', textDecoration: 'none'}}>Navbar <Chip label="Beta" color="warning"/></Link>
+          <Link to={home} style={{color: 'white', textDecoration: 'none'}}>UR Assisto <Chip label="Beta" color="warning"/></Link>
         </Typography>
         {isAuth ? <NavbarLoggedIn /> : <NavbarLoggedOut />}
       </Toolbar>

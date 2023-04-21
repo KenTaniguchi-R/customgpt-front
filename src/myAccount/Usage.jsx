@@ -76,7 +76,7 @@ const UsageOverview = ({ analytics }) =>{
     let price = 0;
     let message = 0;
     analytics.forEach((item) => {
-      price += item.count * (item.type === 'GPT-3.5' ? 100 : 200); // TODO: 価格を変更したらここも変更する
+      price += item.count * (item.type === 'GPT-3.5' ? 10 : 20); // TODO: 価格を変更したらここも変更する
       message += item.count;
     })
     setPriceThisMonth(price);
@@ -387,7 +387,7 @@ function EnhancedTable({ analytics }) {
                         </TableCell>
                         <TableCell width="20%" align="right">{row.count}</TableCell>
                         <TableCell width="20%" align="center">
-                          {row.count * (row.type==='GPT-3.5'? 100: 200)}
+                          {row.count * (row.type==='GPT-3.5'? 10: 20)}
                         </TableCell>
                       </TableRow>
                     );

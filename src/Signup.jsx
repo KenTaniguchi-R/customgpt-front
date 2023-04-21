@@ -113,15 +113,15 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >{
-              signupState.isLoading ? <CircularProgress size={20} /> : 'Sign Up'
+          {
+            signupState.isLoading ?
+            <Button type="button" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} disabled>
+              <CircularProgress size={20} />
+            </Button>:
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              Sign Up
+            </Button>
           }
-          </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="./login" variant="body2">
