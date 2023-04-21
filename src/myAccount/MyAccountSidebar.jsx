@@ -25,7 +25,7 @@ const MyAccountSidebar = () => {
     {name: 'グループの管理', path: '/my-account/group', icon: <GroupsIcon />},
   ]
 
-  if (hasPermC) {
+  if (!hasPermC) {
     links.push(...links2);
   }
 
