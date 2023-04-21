@@ -26,6 +26,16 @@ import { check_message_num } from './utils/check_plan';
 
 const GET_ROOM_MESSAGES_URL = `${BASE_API_ENDPOINT}api/chat/get_messages/`;
 
+
+const styles = {
+  answer_text: {
+    whiteSpace: 'pre-wrap',
+  },
+  reference_text: {
+    whiteSpace: 'pre-wrap',
+  }
+}
+
 function Chat() {
 
   const [messages, setMessages] = useState([]);
@@ -195,7 +205,7 @@ const ChatMessage = ({text, from, reference}) => {
   return (
     <div className={`chat-message from-${from}`}>
       <div className='chat-message__text'>
-        <p>{text}</p>
+        <pre style={styles.answer_text}>{text}</pre>
         { reference &&
           <>
             <br></br>
@@ -209,6 +219,7 @@ const ChatMessage = ({text, from, reference}) => {
 
 const Reference = ({place, text}) => {
   const has_link = place.includes('http');
+  text = text.replace(/(\r\n|\r|\n){2,}/g, '$1\n');
   return (
     <Accordion>
       <AccordionSummary
@@ -219,9 +230,9 @@ const Reference = ({place, text}) => {
         <Typography>参照: {place} <OpenLink has_link={has_link} href={place} /></Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>
+        <pre style={ styles.reference_text }>
           {text}
-        </Typography>
+        </pre>
       </AccordionDetails>
     </Accordion>
   )
