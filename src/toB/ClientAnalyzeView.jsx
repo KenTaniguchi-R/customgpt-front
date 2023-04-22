@@ -372,18 +372,24 @@ function EnhancedTable() {
                         </TableCell>
                         <TableCell width="52%" align="left">
                           { dense? <Typography
+                            component="pre"
                             sx={{
                               overflow: "hidden",
                               textOverflow: "ellipsis",
                               display: "-webkit-box",
                               WebkitLineClamp: "2",
                               WebkitBoxOrient: "vertical",
-                            }}>
+                            }}
+                            style={{ whiteSpace: "pre-wrap" }}
+                          >
                             {row.text}
                           </Typography>:
-                          <>
+                          <Typography
+                            component="pre"
+                            style={{ whiteSpace: "pre-wrap" }}
+                          >
                             {row.text}
-                          </>
+                          </Typography>
                           }
                         </TableCell>
                         <TableCell width="13%" align="right">{row.count}</TableCell>

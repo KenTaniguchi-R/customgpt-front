@@ -320,7 +320,9 @@ function EnhancedTable() {
                                 display: "-webkit-box",
                                 WebkitLineClamp: "2",
                                 WebkitBoxOrient: "vertical",
-                              }}>
+                              }}
+                              style={{ whiteSpace: 'pre-wrap'}}
+                            >
                               {row.question}
                             </Typography>:
                             <>
@@ -330,18 +332,24 @@ function EnhancedTable() {
                         </TableCell>
                         <TableCell width="45%" align="left">
                           { dense? <Typography
+                            component='pre'
                             sx={{
                               overflow: "hidden",
                               textOverflow: "ellipsis",
                               display: "-webkit-box",
                               WebkitLineClamp: "2",
                               WebkitBoxOrient: "vertical",
-                            }}>
+                            }}
+                            style={{ whiteSpace: 'pre-wrap'}}
+                            >
                             {row.answer}
                           </Typography>:
-                          <>
+                          <Typography
+                            component='pre'
+                            style={{ whiteSpace: 'pre-wrap'}}
+                          >
                             {row.answer}
-                          </>
+                          </Typography>
                           }
                         </TableCell>
                       </TableRow>
