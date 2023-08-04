@@ -43,6 +43,7 @@ pre {
 }
 
 .chat-info {
+  overflow-wrap: anywhere;
   padding: 20px;
   display: flex;
   flex-direction: column;
