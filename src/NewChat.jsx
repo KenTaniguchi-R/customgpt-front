@@ -199,12 +199,12 @@ const SourceDialog = ({handleClose, handleConfirm, type, state, setState, modalS
   switch (type) {
     case 'pdf':
       title = 'From PDF';
-      description = `Upload pdf files. ${limits.pdf_t}`;
+      description = `Upload pdf files. ${limits.pdf_t} Takes 1-2 seconds per page`;
       field = <CustomDropzone type="pdf" state={state} setState={setState} />
       break;
     case 'url':
       title = 'From URL';
-      description = `Add URLs here. ${limits.url_t}`;
+      description = `Add URLs here. ${limits.url_t} Takes 5-10 seconds per link`;
       field = <CustomTextField id="url-input" state={state} setState={setState} rows={10} multiline />
       break;
     case 'csv':

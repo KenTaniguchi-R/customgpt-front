@@ -130,12 +130,12 @@ const NavbarLoggedOut = () => {
 
   return (
     <>
-      <Button variant="contained" onClick={handleSignup}>
+      {/* <Button variant="contained" onClick={handleSignup}>
         Sign up
       </Button>
       <Button variant="contained" onClick={handleLogin}>
         Login
-      </Button>
+      </Button> */}
     </>
   )
 }
