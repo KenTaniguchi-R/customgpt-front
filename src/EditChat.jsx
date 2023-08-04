@@ -91,31 +91,31 @@ const EditChat = () => {
     }catch (error){
       console.log(error)
       setIsSent(false);
-      alert('エラーが発生しました。')
+      alert('Error')
     }
   }
 
   return (
     <div className='main-container__form'>
-      <MyBreadcrumbs routes={['ホーム']} current='修正' />
+      <MyBreadcrumbs routes={['Home']} current='Edit' />
 
-      <h1>修正</h1>
+      <h1>Edit</h1>
       <form onSubmit={handleSubmit}>
         <div className='field-container'>
           <div className='form-field'>
-            <p>ソースの修正はできません。</p>
+            <p>Cannot edit sources.</p>
           </div>
           <div className='form-field'>
-            <CustomTextField id="title-input" label="タイトル" state={title} setState={setTitle} rows={1} />
+            <CustomTextField id="title-input" label="Title" state={title} setState={setTitle} rows={1} />
           </div>
           <div className='form-field'>
-            <CustomTextField id="description-input" label="説明文" multiline state={description} setState={setDescription} rows={4}/>
+            <CustomTextField id="description-input" label="Description" multiline state={description} setState={setDescription} rows={4}/>
           </div>
           <div className='form-field'>
-            <CustomDropzone type="image" label="サムネイル画像 (1つのみ)" state={imagePreview} setState={setImagePreview} />
+            <CustomDropzone type="image" label="Thumbnail" state={imagePreview} setState={setImagePreview} />
           </div>
           <div className='form-field'>
-            <CustomRadioSelect id="radio-choice" label="モデル選択" options={['GPT 3.5', 'GPT 4']} state={AImodel} setState={setAImodel} />
+            <CustomRadioSelect id="radio-choice" label="Choose a model" options={['GPT 3.5', 'GPT 4']} state={AImodel} setState={setAImodel} />
           </div>
 
           <div className='form-field'>
@@ -197,7 +197,7 @@ const SubmitButton = ({isSent}) => {
     <>
     {
       !isSent ?
-      <Button variant="contained" type="submit">更新</Button>:
+      <Button variant="contained" type="submit">Update</Button>:
       <Button variant="contained" disabled><CircularProgress size={25}/></Button>
     }
     </>
@@ -219,14 +219,14 @@ const DeleteButton = ({handleDelete}) => {
   return (
     <div className='main-container__form__delete'>
         <Typography variant="h6" gutterBottom>
-          削除しますか？
+          Do you want to delete this chat?
         </Typography>
         <Button
           variant="contained"
           color="error"
           onClick={handleClickOpen}
         >
-          削除
+          Delete
         </Button>
 
         <DeleteModal
@@ -242,14 +242,14 @@ const DeleteModal = ({ onClose, open, handleDelete }) => {
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>本当に削除しますか</DialogTitle>
+      <DialogTitle>Are you sure you want to delete this chat?</DialogTitle>
 
       <DialogActions>
         <Button autoFocus onClick={onClose} color="primary">
-          キャンセル
+          Cancel
         </Button>
         <Button onClick={handleDelete} color="primary">
-          はい
+          Yes
         </Button>
       </DialogActions>
     </Dialog>

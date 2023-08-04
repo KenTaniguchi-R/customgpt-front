@@ -15,13 +15,13 @@ const ShareActivate = () => {
 
   const params = useParams();
   const activation_token = params.activation_token;
-  const [state, setState] = useState({'text': '追加中です。', 'sub': 'しばらくお待ちください。'});
+  const [state, setState] = useState({'text': 'Adding', 'sub': 'Hold on...ß'});
 
   useEffect(() => {
     const res = axios.get(`${BASE_API_ENDPOINT}api/chat/share/${activation_token}/activation/`);
     res.then((res) => {
       if (res.status === 200){
-        setState({'text': 'チャットを追加しました', 'sub': '3秒後にホームページに移動します。'});
+        setState({'text': 'A chat has been added', 'sub': 'Redirecting...'});
 
         setTimeout(() => {
           redirect_to_home(navigate, res.data.is_toC);

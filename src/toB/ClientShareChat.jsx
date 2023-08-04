@@ -45,9 +45,9 @@ const ClientShareChat = () => {
 
   return (
     <div className='main-container__analysis'>
-      <MyBreadcrumbs routes={['ホーム']} current='シェア' />
+      <MyBreadcrumbs routes={['Home']} current='Share' />
 
-      <h1>シェア</h1>
+      <h1>Share</h1>
 
       <EnhancedTable />
       <AddTrigger />
@@ -94,14 +94,15 @@ const SharePublic = () => {
   return (
     <>
       <FormGroup>
-        <FormControlLabel control={<Switch checked={isPublic} onChange={handleChange} />} label="一般公開" />
+        <FormControlLabel control={<Switch checked={isPublic} onChange={handleChange} />} label="Public" />
       </FormGroup>
       { isPublic &&
       <>
         <Typography variant="body2" gutterBottom component="div">
-          このコードを共有すると、誰でもこのチャットに参加できます。クリックでコピーされます。
+          {/* このコードを共有すると、誰でもこのチャットに参加できます。クリックでコピーされます。 */}
+          Anyone can join this chat with this code. Click to copy.
         </Typography>
-        <Tooltip title={copied ? 'コピーしました': 'クリックでコピー'}>
+        <Tooltip title={copied ? 'Copied': 'Click to copy'}>
           <TextField fullWidth disabled id="share_id" value={code.code}
             style={{ cursor: 'pointer' }}
             onClick={handleCopy}
@@ -150,13 +151,13 @@ const headCells = [
     id: 'date_created',
     numeric: false,
     disablePadding: false,
-    label: '追加日',
+    label: 'Added Date',
   },
   {
     id: 'email',
     numeric: false,
     disablePadding: false,
-    label: 'メールアドレス',
+    label: 'Email Address',
   },
 ];
 
@@ -193,7 +194,7 @@ function EnhancedTableHead(props) {
           </TableCell>
         ))}
 
-        <TableCell key='detail' align='center'>削除</TableCell>
+        <TableCell key='detail' align='center'>Delete</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -205,9 +206,9 @@ function EnhancedTableToolbar({search, handleSearch}) {
     <Toolbar
       sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
         <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-          シェア済み一覧
+          Shared Lists
         </Typography>
-        <TextField id="outlined-basic" label="検索" variant="outlined" value={search} onChange={handleSearch} fullWidth />
+        <TextField id="outlined-basic" label="Search" variant="outlined" value={search} onChange={handleSearch} fullWidth />
     </Toolbar>
   );
 }
@@ -373,7 +374,7 @@ function EnhancedTable() {
                           </Typography>
                         </TableCell>
                         <TableCell width="30%" align="center">
-                          <Button onClick={()=> handleDelete(row.email)} color="error">削除</Button>
+                          <Button onClick={()=> handleDelete(row.email)} color="error">Delete</Button>
                         </TableCell>
                       </TableRow>
                     );
@@ -417,7 +418,7 @@ const AddTrigger = () => {
   return (
     <>
     <Box sx={{ width: '100%' }} padding="20px">
-      <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>追加</Button>
+      <Button variant="contained" color="primary" fullWidth onClick={handleClickOpen}>Add</Button>
     </Box>
     <AddDialog open={open} handleClose={handleClose} />
     </>
@@ -445,10 +446,11 @@ const AddDialog = ({open, handleClose}) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>シェア追加</DialogTitle>
+      <DialogTitle>Share by emails</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          シェアするメールアドレスを入力してください。改行で複数のアドレスを登録することができます。
+          {/* シェアするメールアドレスを入力してください。改行で複数のアドレスを登録することができます。 */}
+          Type emails to share chat with. You can type multiple emails by separating them with a line break.
         </DialogContentText>
         <FormControl fullWidth>
           <TextField
@@ -463,8 +465,8 @@ const AddDialog = ({open, handleClose}) => {
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>キャンセル</Button>
-        <Button onClick={handleConfirm}>確定</Button>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleConfirm}>Add</Button>
       </DialogActions>
     </Dialog>
   )

@@ -21,7 +21,7 @@ const Navbar = () => {
   const { isAuth, hasPermC } = useAuthContext();
   const navigate = useNavigate();
 
-  let home = '/';
+  let home = '/client/home';
   if (isAuth && hasPermC) {
     home = '/home';
   } else if (isAuth && !hasPermC) {

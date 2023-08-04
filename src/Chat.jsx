@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import './App.css'
 import TextField from '@mui/material/TextField';
+// import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import { CircularProgress } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
@@ -162,14 +163,20 @@ const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
       </div>
       <div className='input-container'>
         {
-          check_message_num(myPlan, countToday) ?
-          <TextField id="outlined-basic" label="質問" multiline variant="outlined" margin="normal" fullWidth
+
+          <TextField id="outlined-basic" label="Question" variant="outlined" margin="normal" fullWidth
             value={inputState.input} onChange={(e) => inputDispatch({ type: 'INPUT', payload: e.target.value })}
             InputProps={{
               endAdornment: <InputAdornment position="end" className='send-btn' onClick={handleSendMessage} >send</InputAdornment>,
             }}
-          />:
-          <Alert severity="error">1日に送れるメッセージの上限に達しました。プランをアップグレードすることで、メッセージの上限を増やすことができます。</Alert>
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSendMessage();
+              }
+            }}
+          />
+          // :
+          // <Alert severity="error">1日に送れるメッセージの上限に達しました。プランをアップグレードすることで、メッセージの上限を増やすことができます。</Alert>
         }
       </div>
     </section>
@@ -179,7 +186,7 @@ const MainContent = ({messages, setMessages, room_id, setRoomId}) => {
 const ChatList = ({messages, inputState}) => {
   return (
     <div className='chat'>
-      <ChatMessage key={-3} text="ご質問はありますか？" from="them" reference="" />
+      <ChatMessage key={-3} text="Hi, ask me anything" from="them" reference="" />
       {
         messages.map((message) => {
           return (
@@ -227,7 +234,7 @@ const Reference = ({place, text}) => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>参照: {place} <OpenLink has_link={has_link} href={place} /></Typography>
+        <Typography>Reference: {place} <OpenLink has_link={has_link} href={place} /></Typography>
       </AccordionSummary>
       <AccordionDetails>
         <pre style={ styles.reference_text }>

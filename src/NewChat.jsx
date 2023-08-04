@@ -79,15 +79,15 @@ const NewChat = () => {
     }catch (error){
       console.log(error)
       setIsSent(false);
-      alert('エラーが発生しました。')
+      alert('Error')
     }
   }
 
   return (
     <div className='main-container__form'>
-      <MyBreadcrumbs routes={['ホーム']} current='新規作成' />
+      <MyBreadcrumbs routes={['Home']} current='New Chat' />
 
-      <h1>新規作成</h1>
+      <h1>New Chat</h1>
       <form onSubmit={handleSubmit}>
         <div className='field-container'>
           <div className='form-field'>
@@ -95,18 +95,18 @@ const NewChat = () => {
               converted={converted} setConverted={setConverted} session_key={session_key} />
           </div>
           <div className='form-field'>
-            <CustomTextField id="title-input" label="タイトル" state={title} setState={setTitle} rows={1} />
+            <CustomTextField id="title-input" label="Title" state={title} setState={setTitle} rows={1} />
           </div>
           <div className='form-field'>
-            <CustomTextField id="description-input" label="説明文" multiline state={description} setState={setDescription} rows={4}/>
+            <CustomTextField id="description-input" label="Description" multiline state={description} setState={setDescription} rows={4}/>
           </div>
           <div className='form-field'>
-            <CustomDropzone type="image" label="サムネイル画像 (1つのみ)" state={imagePreview} setState={setImagePreview} />
+            <CustomDropzone type="image" label="Thumbnail" state={imagePreview} setState={setImagePreview} />
           </div>
           {
             !hasPermC &&
             <div className='form-field'>
-              <CustomRadioSelect id="radio-choice" label="モデル選択" options={['GPT 3.5', 'GPT 4']} state={AImodel} setState={setAImodel} />
+              <CustomRadioSelect id="radio-choice" label="Choose a model" options={['GPT 3.5', 'GPT 4']} state={AImodel} setState={setAImodel} />
             </div>
           }
 
@@ -165,16 +165,16 @@ const DocTypeList = ({ state, setState, type, setType, converted, setConverted, 
     <>
     <Grid container id="chat_list" spacing={2} padding={3} alignItems="stretch">
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="pdf" current={type} label='PDFから作成' icon={<PictureAsPdfIcon />} handleClickOpen={() => handleClickOpen('pdf')} />
+        <DocTypeButton type="pdf" current={type} label='From PDF' icon={<PictureAsPdfIcon />} handleClickOpen={() => handleClickOpen('pdf')} />
       </Grid>
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="url" current={type} label='URLから作成' icon={<HttpIcon />} handleClickOpen={() => handleClickOpen('url')} />
+        <DocTypeButton type="url" current={type} label='From URL' icon={<HttpIcon />} handleClickOpen={() => handleClickOpen('url')} />
       </Grid>
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="csv" current={type} label='CSVから作成' icon={<BorderAllIcon />} handleClickOpen={() => handleClickOpen('csv')} />
+        <DocTypeButton type="csv" current={type} label='From CSV' icon={<BorderAllIcon />} handleClickOpen={() => handleClickOpen('csv')} />
       </Grid>
       <Grid item xs={6} sm={6} md={3} lg={3} maxWidth="md">
-        <DocTypeButton type="text" current={type} label='テキストから作成' icon={<TextFieldsIcon />} handleClickOpen={() => handleClickOpen('text')} />
+        <DocTypeButton type="text" current={type} label='From Text' icon={<TextFieldsIcon />} handleClickOpen={() => handleClickOpen('text')} />
       </Grid>
     </Grid>
     { modalState.isOpen && !modalState.showExtracted ?
@@ -198,23 +198,23 @@ const SourceDialog = ({handleClose, handleConfirm, type, state, setState, modalS
   let field;
   switch (type) {
     case 'pdf':
-      title = 'PDFから作成';
-      description = `PDFファイルアップロードしてください。${limits.pdf_t}`;
+      title = 'From PDF';
+      description = `Upload pdf files. ${limits.pdf_t}`;
       field = <CustomDropzone type="pdf" state={state} setState={setState} />
       break;
     case 'url':
-      title = 'URLから作成';
-      description = `URLを入力してください。複数のURLを入力する場合は改行してください。${limits.url_t}`;
+      title = 'From URL';
+      description = `Add URLs here. ${limits.url_t}`;
       field = <CustomTextField id="url-input" state={state} setState={setState} rows={10} multiline />
       break;
     case 'csv':
-      title = 'CSVから作成'
-      description = 'CSVファイルをアップロードしてください。text, reference_nameの2つのカラムを持つ必要があります。'
+      title = 'From CSV'
+      description = 'Upload CSV files here. They have to have two columns, text and reference_name'
       field = <CustomDropzone type="csv" state={state} setState={setState} />
       break;
     case 'text':
-      title = 'テキストから作成'
-      description = 'テキストを入力してください。段落分けすることで参照されやすくなります。'
+      title = 'From Text'
+      description = 'Add texts here. '
       field = <CustomTextField id="url-input" state={state} setState={setState} rows={10} multiline />
       break;
     default:
@@ -250,13 +250,13 @@ const SourceDialog = ({handleClose, handleConfirm, type, state, setState, modalS
         {type === 'url' &&
             getMoreState.isLoading ?
             <Button style={{flex: '1 0 0'}}><CircularProgress size={20} /></Button>:
-            <Button onClick={handleFindUrl} style={{flex: '1 0 0'}}>URLを取得</Button>
+            <Button onClick={handleFindUrl} style={{flex: '1 0 0'}}>Get More URLs</Button>
         }
-        <Button onClick={handleClose} style={{flex: '1 0 0'}}>キャンセル</Button>
+        <Button onClick={handleClose} style={{flex: '1 0 0'}}>Cancel</Button>
         {
           modalState.isLoading ?
           <Button style={{flex: '1 0 0'}}><CircularProgress size={20} /></Button>:
-          <Button onClick={() => handleConfirm(type)} style={{flex: '1 0 0'}}>確定</Button>
+          <Button onClick={() => handleConfirm(type)} style={{flex: '1 0 0'}}>Submit</Button>
         }
       </DialogActions>
     </Dialog>
@@ -272,7 +272,7 @@ const ExtractedSource = ({handleClose, state, setState, converted, modalStateDis
 
   return (
     <Dialog open>
-      <DialogTitle>読み込みテキスト</DialogTitle>
+      <DialogTitle>Texts</DialogTitle>
       <DialogContent>
         {
           converted.map((item, index) => {
@@ -286,7 +286,10 @@ const ExtractedSource = ({handleClose, state, setState, converted, modalStateDis
                   <Typography>{item[1]}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>
+                  <Typography
+                    component='pre'
+                    style={{whiteSpace: 'pre-wrap'}}
+                  >
                     {item[0]}
                   </Typography>
                 </AccordionDetails>
@@ -296,8 +299,8 @@ const ExtractedSource = ({handleClose, state, setState, converted, modalStateDis
         }
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleEdit} style={{flex: '1 0 0'}}>変更</Button>
-        <Button onClick={handleClose} style={{flex: '1 0 0'}}>閉じる</Button>
+        <Button onClick={handleEdit} style={{flex: '1 0 0'}}>Edit</Button>
+        <Button onClick={handleClose} style={{flex: '1 0 0'}}>Close</Button>
       </DialogActions>
     </Dialog>
   )
@@ -327,7 +330,7 @@ const CustomDropzone = ({type, label, state, setState}) => {
             filesLimit={1}
             required
             showFileNames
-            dropzoneText="ファイルを選択してください"
+            dropzoneText="Upload a image"
             onChange={(files) => setState(files[0])}
           /> :
           type === 'pdf' ?
@@ -336,8 +339,8 @@ const CustomDropzone = ({type, label, state, setState}) => {
               filesLimit={2}
               required
               showFileNames
-              dropzoneText="ファイルを選択してください"
-              maxFileSize={limits.pdf * 1000000}
+              dropzoneText="Upload pdf files"
+              maxFileSize={limits.pdf * 10000000000000000000}
               onChange={(files) => setState(files)}
             />:
               <DropzoneArea
@@ -345,7 +348,7 @@ const CustomDropzone = ({type, label, state, setState}) => {
                 filesLimit={1}
                 required
                 showFileNames
-                dropzoneText="ファイルを選択してください"
+                dropzoneText="Upload csv files"
                 onChange={(files) => setState(files[0])}
               />
       }
@@ -390,7 +393,7 @@ const SubmitButton = ({isSent}) => {
     <>
     {
       !isSent ?
-      <Button variant="contained" type="submit">作成</Button>:
+      <Button variant="contained" type="submit">Submit</Button>:
       <Button variant="contained" disabled><CircularProgress size={25}/></Button>
     }
     </>
@@ -418,16 +421,18 @@ const SubmitNotice = () => {
       open
     >
       <DialogTitle id="alert-dialog-title">
-        {"チャットを作成中です。"}
+        {/* {"チャットを作成中です。"} */}
+        Creating a chat...
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          作成が完了次第ホーム画面に追加されます。10秒後に自動的にホーム画面に戻ります。
+          {/* 作成が完了次第ホーム画面に追加されます。10秒後に自動的にホーム画面に戻ります。 */}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>
-          ホームへ戻る
+          {/* ホームへ戻る */}
+          Back to Home
         </Button>
       </DialogActions>
     </Dialog>

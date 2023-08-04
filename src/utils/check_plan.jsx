@@ -14,14 +14,14 @@ const get_chat_limit = (myPlan) => {
     1: {
       pdf: 2,
       url: 3,
-      pdf_t: '最大2MBまでです。',
-      url_t: '最大3個まで取得されます。',
+      pdf_t: '',
+      url_t: '',
     },
     2: {
       pdf: 5,
       url: 10,
-      pdf_t: '最大5MBまでです。',
-      url_t: '最大10個まで取得されます。',
+      pdf_t: '',
+      url_t: '',
     },
     3: {
       pdf: 10000,

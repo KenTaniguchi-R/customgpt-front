@@ -12,7 +12,7 @@ import { GOOGLE_CLIENT_ID } from './vars/GOOGLE';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <AuthProvider>
         <PlanProvider>
@@ -20,5 +20,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </PlanProvider>
       </AuthProvider>
     </GoogleOAuthProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 )

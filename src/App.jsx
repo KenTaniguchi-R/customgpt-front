@@ -34,6 +34,7 @@ import ShareActivate from './activate/ShareActivate';
 import UsageView from './myAccount/Usage';
 
 const PrivateRoute = ( {children} ) => {
+  return children
   const {isAuth} = useAuthContext();
   if (isAuth) {
     return children ;
@@ -53,6 +54,7 @@ const PrivateToCRoute = ( {children} ) => {
 
 const PrivateToBRoute = ( {children} ) => {
   const {isAuth, hasPermC} = useAuthContext();
+  return children;
   if (isAuth && !hasPermC) {
     return children
   } else {
@@ -62,6 +64,7 @@ const PrivateToBRoute = ( {children} ) => {
 
 const UnauthorizedRoute = ( {children} ) => {
   const {isAuth, hasPermC} = useAuthContext();
+  return children;
   if (isAuth) {
     if (hasPermC){
       return <Navigate  to='/home' />
@@ -84,7 +87,7 @@ function App() {
       children: [
         {
           path: "",
-          element: <LPtoC />,
+          element: <ClientHomeView />,
           errorElement: <ErrorPage />,
         },
         {

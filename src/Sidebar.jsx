@@ -34,7 +34,7 @@ const ChatInfo = () => {
   return (
     <div className='chat-info'>
       <div style={{textAlign: 'center'}}>
-        <img src={image} alt="プレビュー" width="80%" />
+        <img src={image} alt="Preview" width="80%" />
       </div>
       <div>
         <p>{chatInfo.name}</p>

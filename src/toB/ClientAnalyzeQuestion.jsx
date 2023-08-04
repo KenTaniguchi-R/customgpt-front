@@ -32,9 +32,9 @@ const ClientAnalyzeQuestion = () => {
 
   return (
     <div className='main-container__analysis'>
-      <MyBreadcrumbs routes={['ホーム', 'データ解析']} current='詳細' />
+      <MyBreadcrumbs routes={['Home', 'Analytics']} current='Detail' />
 
-      <h1>データ解析 詳細</h1>
+      <h1>Analytics Detail</h1>
 
       {/* overview */}
       <QuestionOverview />
@@ -105,25 +105,25 @@ const headCells = [
     id: 'date_created',
     numeric: false,
     disablePadding: false,
-    label: '日付',
+    label: 'Date',
   },
   {
     id: 'model_type',
     numeric: false,
     disablePadding: false,
-    label: 'モデル',
+    label: 'Model',
   },
   {
     id: 'question',
     numeric: false,
     disablePadding: false,
-    label: '質問',
+    label: 'Questions',
   },
   {
     id: 'answer',
     numeric: false,
     disablePadding: false,
-    label: '回答',
+    label: 'Answers',
   },
 ];
 
@@ -170,7 +170,8 @@ function EnhancedTableToolbar() {
     <Toolbar
       sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
         <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-          質問・回答一覧
+          {/* 質問・回答一覧 */}
+          Questions and Answers
         </Typography>
     </Toolbar>
   );
@@ -379,7 +380,7 @@ function EnhancedTable() {
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="縮小表示"
+        label="Shrink cell size"
       />
     </Box>
   );

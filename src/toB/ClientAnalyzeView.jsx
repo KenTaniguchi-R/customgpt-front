@@ -50,9 +50,9 @@ const ClientAnalyzeView = () => {
 
   return (
     <div className='main-container__analysis'>
-      <MyBreadcrumbs routes={['ホーム']} current='データ解析' />
+      <MyBreadcrumbs routes={['Home']} current='Analytics' />
 
-      <h1>データ解析</h1>
+      <h1>Analytics</h1>
 
       {/* overview */}
       <AnalysisOverview />
@@ -75,18 +75,18 @@ const AnalysisOverview = () =>{
           <CardContent align="center" >
             <div className='card_content_main'>
               <ChatIcon fontSize='large' />
-              <Typography variant="p">{analytics.total_messages}回</Typography>
+              <Typography variant="p">{analytics.total_messages}</Typography>
             </div>
-            <Typography variant="h5">総チャット回数</Typography>
+            <Typography variant="h5">Total Chat Count</Typography>
           </CardContent>
         </Card>
         <Card className='overview_card-content'>
           <CardContent align="center">
             <div className='card_content_main'>
               <ChatIcon fontSize='large' />
-              <Typography variant="p">{analytics.weekly_counts[analytics.weekly_counts.length - 1]}回</Typography>
+              <Typography variant="p">{analytics.weekly_counts[analytics.weekly_counts.length - 1]}</Typography>
             </div>
-            <Typography variant="h5">本日のチャット回数</Typography>
+            <Typography variant="h5">Today's Chat Count</Typography>
           </CardContent>
         </Card>
         <Card >
@@ -134,7 +134,7 @@ const LineChart = ({weekly_counts}) => {
     labels,
     datasets: [
       {
-        label: 'チャット回数',
+        label: 'Chat Count',
         data: weekly_counts,
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -180,19 +180,19 @@ const headCells = [
     id: 'page_number',
     numeric: false,
     disablePadding: false,
-    label: 'ページ番号',
+    label: 'Source',
   },
   {
     id: 'text',
     numeric: false,
     disablePadding: false,
-    label: 'テキスト',
+    label: 'Text',
   },
   {
     id: 'count',
     numeric: true,
     disablePadding: false,
-    label: '参照回数',
+    label: 'Referred Count',
   },
 ];
 
@@ -229,7 +229,7 @@ function EnhancedTableHead(props) {
           </TableCell>
         ))}
 
-        <TableCell key='detail' align='center'>詳細</TableCell>
+        <TableCell key='detail' align='center'>Detail</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -241,7 +241,7 @@ function EnhancedTableToolbar() {
     <Toolbar
       sx={{ pl: { sm: 2 }, pr: { xs: 1, sm: 1 } }}>
         <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-          質問箇所一覧
+          References
         </Typography>
     </Toolbar>
   );
@@ -394,7 +394,7 @@ function EnhancedTable() {
                         </TableCell>
                         <TableCell width="13%" align="right">{row.count}</TableCell>
                         <TableCell width="15%" align="center">
-                          <Button onClick={()=> handleDetail(row.ref_id)}>詳細</Button>
+                          <Button onClick={()=> handleDetail(row.ref_id)}>Detail</Button>
                         </TableCell>
                       </TableRow>
                     );
@@ -423,7 +423,7 @@ function EnhancedTable() {
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="縮小表示"
+        label="Shrink cell size"
       />
     </Box>
   );
