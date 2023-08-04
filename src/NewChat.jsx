@@ -60,6 +60,8 @@ const NewChat = () => {
 
     try{
 
+      setIsSent(true);
+
       await axios.post(CREATE_CHAT_URL, {
           title: title,
           source: source,
@@ -74,8 +76,6 @@ const NewChat = () => {
           }
         }
       )
-
-      setIsSent(true);
 
     }catch (error){
       console.log(error)
