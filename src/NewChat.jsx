@@ -62,6 +62,7 @@ const NewChat = () => {
 
       await axios.post(CREATE_CHAT_URL, {
           title: title,
+          source: source,
           description: description,
           session_key: session_key.current,
           type: type,
@@ -142,17 +143,18 @@ const DocTypeList = ({ state, setState, type, setType, converted, setConverted, 
         return
       }
 
-      modalStateDispatch({type: 'SEND_REQUEST'});
-      let res = await axios.post(`${BASE_API_ENDPOINT}api/chat/get_converted/`, {
-        source: tempState,
-        type: tempType,
-      }, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      setConverted(res.data.upsert_data)
-      session_key.current = res.data.session_key;
+      // console.log(tempState)
+      // modalStateDispatch({type: 'SEND_REQUEST'});
+      // let res = await axios.post(`${BASE_API_ENDPOINT}api/chat/get_converted/`, {
+      //   source: tempState,
+      //   type: tempType,
+      // }, {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // })
+      // setConverted(res.data.upsert_data)
+      // session_key.current = res.data.session_key;
       setState(tempState);
       setType(tempType);
       modalStateDispatch({type: 'SHOW_EXTRACTED'});
@@ -272,7 +274,7 @@ const ExtractedSource = ({handleClose, state, setState, converted, modalStateDis
 
   return (
     <Dialog open>
-      <DialogTitle>Texts</DialogTitle>
+      <DialogTitle>This will be used</DialogTitle>
       <DialogContent>
         {
           converted.map((item, index) => {
